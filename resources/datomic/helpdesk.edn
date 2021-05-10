@@ -1,0 +1,278 @@
+[;; ===========================
+ ;; Partitions
+ ;; ===========================
+ [{:db/id                 #db/id[:db.part/db],
+   :db/ident              :db.part/helpdesk,
+   :db.install/_partition :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db],
+   :db/ident              :db.part/helpdesk-requests,
+   :db.install/_partition :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db],
+   :db/ident              :db.part/helpdesk-comments,
+   :db.install/_partition :db.part/db}]
+
+
+ ;; ===========================
+ ;; Access category
+ ;; ===========================
+ [{:db/id                  #db/id[:db.part/app]
+   :sys/entity             :entity.sys/access-category
+   :db/ident               :access-category/helpdesk
+   :access-category/weight 2
+   :db/doc                 "Helpdesk Access"
+   }]
+
+ ;; ===========================
+ ;; Entities
+ ;; ===========================
+ [{:db/id                   #db/id[:db.part/app]
+   :sys/entity              :entity.sys/entity
+   :db/ident                :entity.helpdesk/support-request
+   :sys/db.part             :db.part/helpdesk-requests
+   :sys/access-category     :access-category/helpdesk
+   :entity/requires-date?   true
+   :entity/requires-author? true
+   :db/doc                  "Support request"
+   }
+
+  {:db/id               #db/id[:db.part/app]
+   :sys/entity          :entity.sys/entity
+   :db/ident            :entity.helpdesk/support-request-category
+   :sys/db.part         :db.part/helpdesk
+   :sys/access-category :access-category/helpdesk
+   :db/doc              "Support request's category"
+   }
+
+  {:db/id               #db/id[:db.part/app]
+   :sys/entity          :entity.sys/entity
+   :db/ident            :entity.helpdesk/support-request-status
+   :sys/db.part         :db.part/helpdesk
+   :sys/access-category :access-category/helpdesk
+   :db/doc              "Support request's status"
+   }
+
+  {:db/id               #db/id[:db.part/app]
+   :sys/entity          :entity.sys/entity
+   :db/ident            :entity.helpdesk/support-request-severity
+   :sys/db.part         :db.part/helpdesk
+   :sys/access-category :access-category/helpdesk
+   :db/doc              "Support request's severity"
+   }
+
+  {:db/id                   #db/id[:db.part/app]
+   :sys/entity              :entity.sys/entity
+   :db/ident                :entity.helpdesk/comment
+   :sys/db.part             :db.part/helpdesk-comments
+   :sys/access-category     :access-category/helpdesk
+   :entity/requires-date?   true
+   :entity/requires-author? true
+   :db/doc                  "Support request's comment"
+   }]
+
+ ;; ===========================
+ ;; Actions
+ ;; ===========================
+ [{:db/id      #db/id[:db.part/app]
+   :db/ident   :action.helpdesk/create-request
+   :sys/entity :entity.sys/action
+   :db/doc     "Create request"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.helpdesk/read-request
+   :sys/entity :entity.sys/action
+   :db/doc     "Read request"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.helpdesk/update-request
+   :sys/entity :entity.sys/action
+   :db/doc     "Update request"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.helpdesk/browse-requests
+   :sys/entity :entity.sys/action
+   :db/doc     "Browse request"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.helpdesk/customer-dashboard
+   :sys/entity :entity.sys/action
+   :db/doc     "Client dashboard"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.helpdesk/admin-dashboard
+   :sys/entity :entity.sys/action
+   :db/doc     "Admin dashboard"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.helpdesk/customer-browse-requests
+   :db/doc     "Browse own requests"
+   :sys/entity :entity.sys/action
+   }
+  ]
+
+ ;;::::::::::::::::::::::::::::::::::::::::::::::::::::::
+ ;;;;;;;;;;;;;;;;;;;;;Child actions
+
+ [{:db/id                #db/id[:db.part/app]
+   :db/ident             :action.helpdesk/customer-read-request
+   :db/doc               "Read own request"
+   :sys/entity           :entity.sys/action
+   :action/parent        :action.helpdesk/read-request
+   :action/business-rule :brule.app/authorship
+   }
+
+  {:db/id                #db/id[:db.part/app]
+   :db/ident             :action.helpdesk/customer-update-request
+   :db/doc               "Update own request"
+   :sys/entity           :entity.sys/action
+   :action/parent        :action.helpdesk/update-request
+   :action/business-rule :brule.app/authorship
+   }
+
+  ;; ===========================
+  ;; Support requests
+  ;; ===========================
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :support-request/category
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Support request's category"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :support-request/severity
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Support request's severity"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :support-request/title
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/fulltext           true
+   :db/doc                "Support request's title"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :support-request/body
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/fulltext           true
+   :db/doc                "Support request's body"
+   :db.install/_attribute :db.part/db
+   }
+
+  ;; ===========================
+  ;; Support request's category
+  ;; ===========================
+  {:db/id      #db/id[:db.part/helpdesk]
+   :sys/entity :entity.helpdesk/support-request-category
+   :db/ident   :support-request-categories/generic
+   :db/doc     "Generic"
+   }
+  {:db/id      #db/id[:db.part/helpdesk]
+   :sys/entity :entity.helpdesk/support-request-category
+   :db/ident   :support-request-categories/finance
+   :db/doc     "Finance"
+   }
+  {:db/id      #db/id[:db.part/helpdesk]
+   :sys/entity :entity.helpdesk/support-request-category
+   :db/ident   :support-request-categories/technical
+   :db/doc     "Technical"
+   }
+  ;; ===========================
+  ;; Support request's base statuses
+  ;; ===========================
+  {:db/id      #db/id[:db.part/helpdesk]
+   :sys/entity :entity.helpdesk/support-request-status
+   :db/ident   :support-request-statuses/open
+   :db/doc     "Open"
+   }
+  {:db/id      #db/id[:db.part/helpdesk]
+   :sys/entity :entity.helpdesk/support-request-status
+   :db/ident   :support-request-statuses/close
+   :db/doc     "Close"
+   }
+
+  ;; ===========================
+  ;; Support request's base severities
+  ;; ===========================
+  {:db/id      #db/id[:db.part/helpdesk]
+   :sys/entity :entity.helpdesk/support-request-severity
+   :db/ident   :support-request-severities/trivial
+   :db/doc     "Trivial"
+   }
+  {:db/id      #db/id[:db.part/helpdesk]
+   :sys/entity :entity.helpdesk/support-request-severity
+   :db/ident   :support-request-severities/minor
+   :db/doc     "Minor"
+   }
+  {:db/id      #db/id[:db.part/helpdesk]
+   :sys/entity :entity.helpdesk/support-request-severity
+   :db/ident   :support-request-severities/medium
+   :db/doc     "Medium"
+   }
+  {:db/id      #db/id[:db.part/helpdesk]
+   :sys/entity :entity.helpdesk/support-request-severity
+   :db/ident   :support-request-severities/major
+   :db/doc     "Major"
+   }
+  {:db/id      #db/id[:db.part/helpdesk]
+   :sys/entity :entity.helpdesk/support-request-severity
+   :db/ident   :support-request-severities/critical
+   :db/doc     "Critical"
+   }]
+
+ [{:db/id #db/id[:db.part/app -1]
+   :permission/access-category
+          :access-category/helpdesk
+   :permission/permitted-action
+          [:action.helpdesk/customer-dashboard
+           :action.helpdesk/customer-browse-requests
+           :action.helpdesk/create-request
+           :action.helpdesk/customer-update-request
+           :action.helpdesk/customer-read-request]}
+
+  {:db/id :access-level/omega-authenticated
+   :access-level/permission
+          #db/id[:db.part/app -1]}
+  {:db/id :access-level/zeta
+   :access-level/permission
+          #db/id[:db.part/app -1]}
+  {:db/id :access-level/gamma
+   :access-level/permission
+          #db/id[:db.part/app -1]}
+  {:db/id :access-level/betta
+   :access-level/permission
+          #db/id[:db.part/app -1]}
+  {:db/id :access-level/alpha
+   :access-level/permission
+          #db/id[:db.part/app -1]}
+  {:db/id :access-level/alpha-admin
+   :access-level/permission
+          {:db/id #db/id[:db.part/app]
+           :permission/access-category
+                  :access-category/helpdesk
+           :permission/permitted-action
+                  [:action.helpdesk/customer-dashboard
+                   :action.helpdesk/customer-browse-requests
+                   :action.helpdesk/create-request
+                   :action.helpdesk/update-request
+                   :action.helpdesk/read-request
+
+                   :action.helpdesk/admin-dashboard
+                   :action.helpdesk/browse-requests]}}]
+ ]
+

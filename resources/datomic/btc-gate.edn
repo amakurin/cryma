@@ -1,0 +1,107 @@
+[[
+  ;; ===========================
+  ;; Partitions
+  ;; ===========================
+
+  {:db/id                 #db/id[:db.part/db],
+   :db/ident              :db.part/btc-gate,
+   :db.install/_partition :db.part/db}
+
+
+  ;; ===========================
+  ;; Generic
+  ;; ===========================
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :sys/status
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Generic status"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :btc/amount
+   :db/valueType          :db.type/bigdec
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Amount nominated in BTC"
+   :db.install/_attribute :db.part/db}
+
+  ;; ===========================
+  ;; Payment requests
+  ;; ===========================
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :payment-request/order-id
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Order identifier"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :payment-request/address
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/unique             :db.unique/value
+   :db/doc                "Btc payment base58 address"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :payment-request/private
+   :db/valueType          :db.type/string
+   :db/noHistory          true
+   :db/unique             :db.unique/value
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Btc key-pair private"
+   :db.install/_attribute :db.part/db}
+
+  ;; ===========================
+  ;; Payment Request Statuses
+  ;; ===========================
+
+  {:db/id    #db/id[:db.part/db]
+   :db/ident :pr.statuses/requested
+   :db/doc   "Requested"
+   }
+
+  {:db/id    #db/id[:db.part/db]
+   :db/ident :pr.statuses/processed
+   :db/doc   "Processed"
+   }
+
+  ;; ===========================
+  ;; Networks
+  ;; ===========================
+
+  {:db/id    #db/id[:db.part/db]
+   :db/ident :btc-network/test
+   :db/doc   "Test"
+   }
+
+  {:db/id    #db/id[:db.part/db]
+   :db/ident :btc-network/prod
+   :db/doc   "Prod"
+   }
+
+
+  ;; ===========================
+  ;; Forwardings
+  ;; ===========================
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :forwarding/address
+   :db/valueType          :db.type/string
+   :db/noHistory          true
+   :db/cardinality        :db.cardinality/one
+   :db/unique             :db.unique/value
+   :db/doc                "Btc forwarding address"
+   :db.install/_attribute :db.part/db}
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :forwarding/network
+   :db/valueType          :db.type/ref
+   :db/noHistory          true
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Btc network"
+   :db.install/_attribute :db.part/db}]
+
+ ]
+

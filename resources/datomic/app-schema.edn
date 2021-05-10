@@ -1,0 +1,1545 @@
+[
+ ;;::::::::::::::::::::::::::::::::::::::::::::::::::::::
+ ;;;;;;;;;;;;;;;;;;;;;Sys attrs
+ [
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :sys/entity
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Entity type (Entity)"
+   :db.install/_attribute :db.part/db}
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :sys/archived
+   :db/valueType          :db.type/boolean
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Archived flag"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :sys/access-category
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Access category"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :sys/anchor
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Reference to parent entity"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :sys/author
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Reference to user - author of entity"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :sys/status
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Generic status"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :sys/description
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Generic description"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :sys/read-by
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/many
+   :db/doc                "Ref to user that have read some data (read flag per user)"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :sys/date
+   :db/valueType          :db.type/instant
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Creation date"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :access-category/weight
+   :db/valueType          :db.type/long
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Access category weight"
+   :db.install/_attribute :db.part/db
+   }
+  ]
+
+ ;;::::::::::::::::::::::::::::::::::::::::::::::::::::::
+ ;;;;;;;;;;;;;;;;;;;;;Partitions
+ [{:db/id                 #db/id[:db.part/db],
+   :db/ident              :db.part/app,
+   :db.install/_partition :db.part/db}
+  {:db/id                 #db/id[:db.part/db],
+   :db/ident              :db.part/users,
+   :db.install/_partition :db.part/db}
+  {:db/id                 #db/id[:db.part/db],
+   :db/ident              :db.part/ratings,
+   :db.install/_partition :db.part/db}
+  {:db/id                 #db/id[:db.part/db],
+   :db/ident              :db.part/favorites,
+   :db.install/_partition :db.part/db}
+  {:db/id                 #db/id[:db.part/db],
+   :db/ident              :db.part/subs,
+   :db.install/_partition :db.part/db}
+  {:db/id                 #db/id[:db.part/db],
+   :db/ident              :db.part/posts,
+   :db.install/_partition :db.part/db}
+  {:db/id                 #db/id[:db.part/db],
+   :db/ident              :db.part/hubs,
+   :db.install/_partition :db.part/db}
+  {:db/id                 #db/id[:db.part/db],
+   :db/ident              :db.part/tags,
+   :db.install/_partition :db.part/db}
+  {:db/id                 #db/id[:db.part/db],
+   :db/ident              :db.part/comments,
+   :db.install/_partition :db.part/db}
+  {:db/id                 #db/id[:db.part/db],
+   :db/ident              :db.part/events,
+   :db.install/_partition :db.part/db}
+  ]
+
+ ;;::::::::::::::::::::::::::::::::::::::::::::::::::::::
+ ;;;;;;;;;;;;;;;;;;;;;Util fns
+ [{:db/id    #db/id [:db.part/app]
+   :db/ident :app/root-anchor-fn
+   :db/fn    #db/fn {:lang   "clojure"
+                     :params [db eid]
+                     :code   "(ffirst
+                               (d/q
+                                 '[:find ?root
+                                   :in $ % ?e
+                                   :where
+                                   (root-anchor ?e ?root)]
+                                 db
+                                 '[[(root-anchor ?e ?root)
+                                    [(missing? $ ?e :sys/anchor)]
+                                    [(identity ?e) ?root]]
+                                   [(root-anchor ?e ?root)
+                                    [?e :sys/anchor ?anc]
+                                    (root-anchor ?anc ?root)]]
+                                 eid))"}}
+  {:db/id
+   #db/id [:db.part/app]
+   :db/ident
+   :app/add-entity
+   :db/fn
+   #db/fn {:lang   "clojure"
+           :params [db entity-data user-id]
+           :code   "(let [{upd-agg?     :entity/updates-aggregator?
+                          agg-vattr    :entity/aggregator-value-attr
+                          agg-strategy :entity/aggregator-strategy}
+                         (d/pull db [{:entity/updates-aggregator? [:db/ident]}
+                                     :entity/aggregator-value-attr
+                                     :entity/aggregator-strategy]
+                           (:sys/entity entity-data))]
+                     (vec
+                       (concat
+                         (when-let [agg-attr (:db/ident upd-agg?)]
+                           (d/invoke db :app/agg-fn
+                             db agg-attr entity-data
+                             agg-vattr agg-strategy false))
+                         [entity-data
+                          [:db/add #db/id[:db.part/tx] :sys/author user-id]])))"}}
+
+  {:db/id
+   #db/id [:db.part/app]
+   :db/ident
+   :app/update-entity
+   :db/fn
+   #db/fn {:lang   "clojure"
+           :params [db entity-data user-id]
+           :code   "[entity-data
+                     [:db/add #db/id[:db.part/tx] :sys/author user-id]]"}}
+
+  {:db/id
+   #db/id [:db.part/app]
+   :db/ident
+   :app/retract-entity
+   :db/fn
+   #db/fn {:lang   "clojure"
+           :params [db entity-id user-id]
+           :code   "(let [entity-data
+                         (->
+                          (d/pull db
+                           [:*
+                            {:sys/entity [{:entity/updates-aggregator? [:db/ident]}
+                                          :entity/aggregator-value-attr
+                                          :entity/aggregator-strategy]}]
+                            entity-id)
+                            (update :sys/anchor :db/id))
+                         {upd-agg?     :entity/updates-aggregator?
+                          agg-vattr    :entity/aggregator-value-attr
+                          agg-strategy :entity/aggregator-strategy}
+                         (:sys/entity entity-data)]
+                     (vec
+                       (concat
+                         (when-let [agg-attr (:db/ident upd-agg?)]
+                           (d/invoke db :app/agg-fn
+                             db agg-attr entity-data
+                             agg-vattr agg-strategy :retraction!))
+                         [[:db.fn/retractEntity entity-id]
+                          [:db/add #db/id[:db.part/tx] :sys/author user-id]])))"}}
+
+  {:db/id    #db/id [:db.part/app]
+   :db/ident :app/swap+
+   :db/fn    #db/fn {:lang   "clojure"
+                     :params [db eid attr value retraction?]
+                     :code   "(let [delta-v (or value 1)
+                                    e (d/entity db eid)
+                                    v (attr e 0)
+                                    op (if retraction? - +)]
+                                 [[:db/add eid attr (op v delta-v)]])"}}
+
+  {:db/id    #db/id [:db.part/app]
+   :db/ident :app/agg-fn
+   :db/fn    #db/fn {:lang   "clojure"
+                     :params [db anchor-agg-attr entity-data entity-attr agg-strategy retraction?]
+                     :code   "(let [anchor-id (case (or agg-strategy :anchor)
+                                                :anchor (:sys/anchor entity-data)
+                                                :root-anchor (d/invoke db :app/root-anchor-fn
+                                                               db (:sys/anchor entity-data)))
+                                    delta-v (when entity-attr (entity-attr entity-data 1))]
+                                 (d/invoke db :app/swap+
+                                   db anchor-id anchor-agg-attr delta-v retraction?))"}}]
+
+ ;;::::::::::::::::::::::::::::::::::::::::::::::::::::::
+ ;;;;;;;;;;;;;;;;;;;;Aggregators
+
+ [{:db/id                 #db/id[:db.part/db]
+   :db/ident              :app/ratings
+   :db/valueType          :db.type/long
+   :db/cardinality        :db.cardinality/one
+   :db/noHistory          true
+   :db/doc                "Rating aggregator - sum of ratings"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :app/favorites
+   :db/valueType          :db.type/long
+   :db/cardinality        :db.cardinality/one
+   :db/noHistory          true
+   :db/doc                "Favorites aggregator - count of favorites"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :app/subs
+   :db/valueType          :db.type/long
+   :db/cardinality        :db.cardinality/one
+   :db/noHistory          true
+   :db/doc                "Subscription aggregator - count of subs to entity"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :app/comments
+   :db/valueType          :db.type/long
+   :db/cardinality        :db.cardinality/one
+   :db/noHistory          true
+   :db/doc                "Comments aggregator - count of comments"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :post/views
+   :db/valueType          :db.type/long
+   :db/cardinality        :db.cardinality/one
+   :db/noHistory          true
+   :db/doc                "Views aggregator - count of post views"
+   :db.install/_attribute :db.part/db}
+  ]
+
+ ;;::::::::::::::::::::::::::::::::::::::::::::::::::::::
+ ;;;;;;;;;;;;;;;;;;;;;Sys entities
+ [{:db/id    #db/id[:db.part/app]
+   :db/ident :entity.sys/entity
+   :db/doc   "System entity"
+   }
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :sys/db.part
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Partition of entity"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :entity/requires-date?
+   :db/valueType          :db.type/boolean
+   :db/cardinality        :db.cardinality/one
+   :db/doc                ":sys/date should be set during creation"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :entity/requires-author?
+   :db/valueType          :db.type/boolean
+   :db/cardinality        :db.cardinality/one
+   :db/doc                ":sys/author should be set during creation"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :entity/updates-aggregator?
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "ref to aggregator attribute of anchor that should be updated on creation"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :entity/aggregator-value-attr
+   :db/valueType          :db.type/keyword
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Value attribute of entity to get value for aggregator"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :entity/aggregator-strategy
+   :db/valueType          :db.type/keyword
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Strategy of aggregations. Supported :root-anchor - aggregates on root, :anchor(default) - aggregates right on anchored entity"
+   :db.install/_attribute :db.part/db}
+  ]
+
+ [{:db/id       :entity.sys/entity
+   :sys/entity  :entity.sys/entity
+   :sys/db.part :db.part/app
+   }
+
+  {:db/id       #db/id[:db.part/app]
+   :sys/entity  :entity.sys/entity
+   :db/ident    :entity.sys/business-rule
+   :sys/db.part :db.part/app
+   :db/doc      "System business rule"
+   }
+
+  {:db/id       #db/id[:db.part/app]
+   :sys/entity  :entity.sys/entity
+   :db/ident    :entity.sys/app
+   :sys/db.part :db.part/app
+   :db/doc      "System app"
+   }
+  {:db/id       #db/id[:db.part/app]
+   :sys/entity  :entity.sys/entity
+   :db/ident    :entity.sys/action
+   :sys/db.part :db.part/app
+   :db/doc      "System action"
+   }
+  {:db/id       #db/id[:db.part/app]
+   :sys/entity  :entity.sys/entity
+   :db/ident    :entity.sys/access-category
+   :sys/db.part :db.part/app
+   :db/doc      "System access category"
+   }
+  {:db/id       #db/id[:db.part/app]
+   :sys/entity  :entity.sys/entity
+   :db/ident    :entity.sys/access-level
+   :sys/db.part :db.part/app
+   :db/doc      "System access level"
+   }
+
+  {:db/id                   #db/id[:db.part/app]
+   :sys/entity              :entity.sys/entity
+   :db/ident                :entity.sys/user
+   :sys/db.part             :db.part/users
+   :entity/requires-date?   true
+   :entity/requires-author? true
+   :db/doc                  "System user"
+   }
+
+  {:db/id                        #db/id[:db.part/app]
+   :sys/entity                   :entity.sys/entity
+   :db/ident                     :entity.app/rating
+   :sys/db.part                  :db.part/ratings
+   :entity/requires-date?        true
+   :entity/requires-author?      true
+   :entity/updates-aggregator?   :app/ratings
+   :entity/aggregator-value-attr :rating/value
+   :db/doc                       "Rating"
+   }
+
+  {:db/id                      #db/id[:db.part/app]
+   :sys/entity                 :entity.sys/entity
+   :db/ident                   :entity.app/favorite
+   :sys/db.part                :db.part/favorites
+   :entity/requires-date?      true
+   :entity/requires-author?    true
+   :entity/updates-aggregator? :app/favorites
+   :db/doc                     "Favorite"
+   }
+
+  {:db/id                      #db/id[:db.part/app]
+   :sys/entity                 :entity.sys/entity
+   :db/ident                   :entity.app/sub
+   :entity/requires-date?      true
+   :entity/requires-author?    true
+   :entity/updates-aggregator? :app/subs
+   :sys/db.part                :db.part/subs
+   :db/doc                     "Subscription"
+   }
+
+  {:db/id                   #db/id[:db.part/app]
+   :sys/entity              :entity.sys/entity
+   :db/ident                :entity.app/post
+   :sys/db.part             :db.part/posts
+   :entity/requires-date?   true
+   :entity/requires-author? true
+   :db/doc                  "Post"
+   }
+
+  {:db/id                   #db/id[:db.part/app]
+   :sys/entity              :entity.sys/entity
+   :db/ident                :entity.app/hub
+   :sys/db.part             :db.part/hubs
+   :entity/requires-date?   true
+   :entity/requires-author? true
+   :db/doc                  "Hub"
+   }
+
+  {:db/id       #db/id[:db.part/app]
+   :sys/entity  :entity.sys/entity
+   :db/ident    :entity.app/tag
+   :sys/db.part :db.part/tags
+   :db/doc      "Tag"
+   }
+
+  {:db/id                      #db/id[:db.part/app]
+   :sys/entity                 :entity.sys/entity
+   :db/ident                   :entity.app/comment
+   :sys/db.part                :db.part/comments
+   :entity/requires-date?      true
+   :entity/requires-author?    true
+   :entity/updates-aggregator? :app/comments
+   :entity/aggregator-strategy :root-anchor
+   :db/doc                     "Comment"
+   }
+
+  {:db/id                   #db/id[:db.part/app]
+   :sys/entity              :entity.sys/entity
+   :db/ident                :entity.app/event
+   :sys/db.part             :db.part/events
+   :entity/requires-author? true
+   :db/doc                  "Notification event"
+   }
+  ]
+
+ ;;::::::::::::::::::::::::::::::::::::::::::::::::::::::
+ ;;;;;;;;;;;;;;;;;;;;;Access-categories
+ [
+  ;;;;;;;;;;;;;;;;;;;;;Access-category
+  {:db/id                  #db/id[:db.part/app]
+   :sys/entity             :entity.sys/access-category
+   :db/ident               :access-category/open
+   :access-category/weight 0
+   :db/doc                 "Open Access"
+   }
+
+  {:db/id                  #db/id[:db.part/app]
+   :sys/entity             :entity.sys/access-category
+   :db/ident               :access-category/open-premium
+   :access-category/weight 0
+   :db/doc                 "Premium Open Access"
+   }
+
+  {:db/id                  #db/id[:db.part/app]
+   :sys/entity             :entity.sys/access-category
+   :db/ident               :access-category/restricted
+   :access-category/weight 1
+   :db/doc                 "Restricted Access"
+   }
+
+  {:db/id                  #db/id[:db.part/app]
+   :sys/entity             :entity.sys/access-category
+   :db/ident               :access-category/administrative
+   :access-category/weight 2
+   :db/doc                 "Administrative Access"
+   }
+  ]
+
+ [;;;;;;;;;;;;;;;;;;;;;Entities access defaults
+  {:db/id               :entity.sys/app
+   :sys/access-category :access-category/administrative
+   }
+  {:db/id               :entity.sys/action
+   :sys/access-category :access-category/administrative
+   }
+  {:db/id               :entity.sys/access-category
+   :sys/access-category :access-category/administrative
+   }
+  {:db/id               :entity.sys/access-level
+   :sys/access-category :access-category/administrative
+   }
+  {:db/id               :entity.sys/user
+   :sys/access-category :access-category/administrative
+   }
+  {:db/id               :entity.sys/business-rule
+   :sys/access-category :access-category/administrative
+   }
+  {:db/id               :entity.app/post
+   :sys/access-category :access-category/open
+   }
+  {:db/id               :entity.app/hub
+   :sys/access-category :access-category/administrative
+   }
+  {:db/id               :entity.app/tag
+   :sys/access-category :access-category/open
+   }
+  {:db/id               :entity.app/comment
+   :sys/access-category :access-category/administrative
+   }
+  ]
+
+ ;;::::::::::::::::::::::::::::::::::::::::::::::::::::::
+ [;;;;;;;;;;;;;;;;;;;;;Business rules
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :brule.app/authorship
+   :sys/entity :entity.sys/business-rule
+   :db/doc     "Works if user-id equals :sys/author"
+   }
+
+  ;;;;;;;;;;;;;;;;;;;;;Action attrs
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :action/parent
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Parent action type"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :action/business-rule
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Action's business rule"
+   :db.install/_attribute :db.part/db}
+
+  ;;;;;;;;;;;;;;;;;;;;;Base actions
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/create-post
+   :sys/entity :entity.sys/action
+   :db/doc     "Create post"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/read-post
+   :sys/entity :entity.sys/action
+   :db/doc     "Read post"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/edit-post
+   :sys/entity :entity.sys/action
+   :db/doc     "Edit post"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/rate-post
+   :sys/entity :entity.sys/action
+   :db/doc     "Rate post"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/favorite-post
+   :sys/entity :entity.sys/action
+   :db/doc     "Favorite post"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/read-post-discussion
+   :sys/entity :entity.sys/action
+   :db/doc     "Read post discussion"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/write-comment
+   :sys/entity :entity.sys/action
+   :db/doc     "Write comment"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/edit-comment
+   :sys/entity :entity.sys/action
+   :db/doc     "Edit comment"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/rate-comment
+   :sys/entity :entity.sys/action
+   :db/doc     "Rate comment"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/read-hub
+   :sys/entity :entity.sys/action
+   :db/doc     "Read hub"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/join-hub
+   :sys/entity :entity.sys/action
+   :db/doc     "Join hub"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/edit-hub
+   :sys/entity :entity.sys/action
+   :db/doc     "Edit hub"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/create-hub
+   :sys/entity :entity.sys/action
+   :db/doc     "Create hub"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/subscribe-user
+   :sys/entity :entity.sys/action
+   :db/doc     "Subscribe user"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/browse-users
+   :sys/entity :entity.sys/action
+   :db/doc     "Browse users"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/browse-user-profiles
+   :sys/entity :entity.sys/action
+   :db/doc     "Browse profiles"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/read-user
+   :sys/entity :entity.sys/action
+   :db/doc     "Read user"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/read-user-profile
+   :sys/entity :entity.sys/action
+   :db/doc     "Read user's profile"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/read-user-tracker
+   :sys/entity :entity.sys/action
+   :db/doc     "Read user's tracker"
+   }
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.app/edit-user-profile
+   :sys/entity :entity.sys/action
+   :db/doc     "Edit user's profile"
+   }
+  ]
+
+ ;;::::::::::::::::::::::::::::::::::::::::::::::::::::::
+ ;;;;;;;;;;;;;;;;;;;;;Child actions
+ [
+  {:db/id         #db/id[:db.part/app]
+   :db/ident      :action.app/read-post-preview
+   :action/parent :action.app/read-post
+   :sys/entity    :entity.sys/action
+   :db/doc        "Read post preview"
+   }
+
+  {:db/id                #db/id[:db.part/app]
+   :db/ident             :action.app/read-own-post
+   :db/doc               "Read own post"
+   :sys/entity           :entity.sys/action
+   :action/parent        :action.app/read-post
+   :action/business-rule :brule.app/authorship
+   }
+
+  {:db/id                #db/id[:db.part/app]
+   :db/ident             :action.app/edit-own-post
+   :db/doc               "Edit own post"
+   :sys/entity           :entity.sys/action
+   :action/parent        :action.app/edit-post
+   :action/business-rule :brule.app/authorship
+   }
+
+  {:db/id                #db/id[:db.part/app]
+   :db/ident             :action.app/edit-own-comment
+   :db/doc               "Edit own comment"
+   :sys/entity           :entity.sys/action
+   :action/parent        :action.app/edit-comment
+   :action/business-rule :brule.app/authorship
+   }
+
+  {:db/id                #db/id[:db.part/app]
+   :db/ident             :action.app/read-own-tracker
+   :db/doc               "Read own profile"
+   :sys/entity           :entity.sys/action
+   :action/parent        :action.app/read-user-tracker
+   :action/business-rule :brule.app/authorship
+   }
+
+  {:db/id                #db/id[:db.part/app]
+   :db/ident             :action.app/read-own-profile
+   :db/doc               "Read own profile"
+   :sys/entity           :entity.sys/action
+   :action/parent        :action.app/read-user-profile
+   :action/business-rule :brule.app/authorship
+   }
+
+  {:db/id                #db/id[:db.part/app]
+   :db/ident             :action.app/edit-own-profile
+   :db/doc               "Edit own profile"
+   :sys/entity           :entity.sys/action
+   :action/parent        :action.app/edit-user-profile
+   :action/business-rule :brule.app/authorship
+   }
+  ]
+
+ ;;;;;;;;;;;;;;;;;;;;;Admin actions
+ [{:db/id      #db/id[:db.part/app]
+   :db/ident   :action.adm/users
+   :sys/entity :entity.sys/action
+   :db/doc     "Users admin dashboard"}
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.adm/hubs
+   :sys/entity :entity.sys/action
+   :db/doc     "Hubs admin dashboard"}
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.adm/billing
+   :sys/entity :entity.sys/action
+   :db/doc     "Billing admin dashboard"}
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.adm/browse-users
+   :sys/entity :entity.sys/action}
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.adm/read-user
+   :sys/entity :entity.sys/action}
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.adm/create-user
+   :sys/entity :entity.sys/action}
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.adm/update-user
+   :sys/entity :entity.sys/action}
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.adm/remove-user
+   :sys/entity :entity.sys/action}
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.adm/browse-hubs
+   :sys/entity :entity.sys/action}
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.adm/read-hub
+   :sys/entity :entity.sys/action}
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.adm/create-hub
+   :sys/entity :entity.sys/action}
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.adm/update-hub
+   :sys/entity :entity.sys/action}
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.adm/remove-hub
+   :sys/entity :entity.sys/action}
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.adm/access-level-search
+   :sys/entity :entity.sys/action}
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.adm/access-category-search
+   :sys/entity :entity.sys/action}
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.adm/billing-browse-orders
+   :sys/entity :entity.sys/action}
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.adm/billing-get-balance
+   :sys/entity :entity.sys/action}
+
+  {:db/id      #db/id[:db.part/app]
+   :db/ident   :action.adm/billing-force-forwarding
+   :sys/entity :entity.sys/action}
+  ]
+
+ ;;::::::::::::::::::::::::::::::::::::::::::::::::::::::
+ ;;Fields
+ [
+  ;;;;;;;;;;;;;;;;;;;;;App
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :app/name
+   :db/valueType          :db.type/string
+   :db/unique             :db.unique/value
+   :db/cardinality        :db.cardinality/one
+   :db/fulltext           true
+   :db/doc                "App's name"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :app/lang
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "App's lang"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :app/default-locale
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "App's default locale"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :app/build-number
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "App's build number"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :app/debug-css
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/many
+   :db/doc                "App's debug css"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :app/prod-css
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/many
+   :db/doc                "App's prod css"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :app/debug-js
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/many
+   :db/doc                "App's debug js"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :app/prod-js
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/many
+   :db/doc                "App's prod js"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :app/main-ns
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "App's namespace with main fn defined"
+   :db.install/_attribute :db.part/db
+   }
+
+  ;;;;;;;;;;;;;;;;;;;;;Access-level
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :access-level/name
+   :db/valueType          :db.type/string
+   :db/unique             :db.unique/value
+   :db/cardinality        :db.cardinality/one
+   :db/fulltext           true
+   :db/doc                "Access level's name"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :access-level/assignable?
+   :db/valueType          :db.type/boolean
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Assignable flag"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :access-level/for-sale
+   :db/valueType          :db.type/boolean
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "For sale flag"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :access-level/permission
+   :db/valueType          :db.type/ref
+   :db/isComponent        true
+   :db/cardinality        :db.cardinality/many
+   :db/doc                "Access level's permissions"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :permission/access-category
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Permission's access-category"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :permission/permitted-action
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/many
+   :db/doc                "Permission's permitted actions"
+   :db.install/_attribute :db.part/db
+   }
+
+  ;;;;;;;;;;;;;;;;;;;;;User
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :user/nickname
+   :db/valueType          :db.type/string
+   :db/unique             :db.unique/value
+   :db/cardinality        :db.cardinality/one
+   :db/fulltext           true
+   :db/doc                "User's name"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :user/about
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/fulltext           true
+   :db/doc                "User's about text"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :user/login
+   :db/valueType          :db.type/string
+   :db/unique             :db.unique/value
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "User's login"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :user/pwd-hash
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "User's pwd"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :user/is-sys
+   :db/valueType          :db.type/boolean
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "System user's flag"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :user/built-in
+   :db/valueType          :db.type/boolean
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Built-in user's flag"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :user/access-level
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "User's access level"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :user/access-expiry
+   :db/valueType          :db.type/instant
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "User's access expiry date"
+   :db.install/_attribute :db.part/db
+   }
+
+  ;;;;;;;;;;;;;;;;;;;;;Rating
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :rating/value
+   :db/valueType          :db.type/long
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Value of rating"
+   :db.install/_attribute :db.part/db
+   }
+
+  ;;;;;;;;;;;;;;;;;;;;;Hub
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :hub/name
+   :db/valueType          :db.type/string
+   :db/unique             :db.unique/value
+   :db/cardinality        :db.cardinality/one
+   :db/fulltext           true
+   :db/doc                "Hub's name"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :hub/description
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/fulltext           true
+   :db/doc                "Hub's description"
+   :db.install/_attribute :db.part/db
+   }
+
+  ;;;;;;;;;;;;;;;;;;;;;Tag
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :tag/title
+   :db/valueType          :db.type/string
+   :db/unique             :db.unique/identity
+   :db/cardinality        :db.cardinality/one
+   :db/fulltext           true
+   :db/doc                "Tags's title"
+   :db.install/_attribute :db.part/db
+   }
+
+  ;;;;;;;;;;;;;;;;;;;;;Post
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :post/title
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/fulltext           true
+   :db/doc                "Posts's title"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :post/preview
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/fulltext           true
+   :db/doc                "Posts's body preview"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :post/undercut
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/fulltext           true
+   :db/doc                "Posts's body undercut"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :post/hub
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/many
+   :db/doc                "Publication's hubs"
+   :db.install/_attribute :db.part/db
+   }
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :post/tag
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/many
+   :db/doc                "Posts's tags"
+   :db.install/_attribute :db.part/db
+   }
+
+  ;;;;;;;;;;;;;;;;;;;;;Comment
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :comment/body
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/fulltext           true
+   :db/doc                "Comment's body"
+   :db.install/_attribute :db.part/db
+   }
+
+  ]
+
+ [{:db/id              #db/id[:db.part/app]
+   :db/ident           :app/app
+   :app/build-number   "0.0.1"
+   :app/name           "DArk RUssian SOCial"
+   :app/lang           "ru"
+   :app/default-locale "ru_RU"
+   :app/debug-css      ["/css/base.css"
+                        "/css/layout.css"
+                        "/css/skeleton.css"
+                        "/css/font-awesome.css"]
+   :app/prod-css       ["/css/prod.css"]
+   :app/debug-js       ["/js/cljs-dev-out/goog/base.js"
+                        "/js/dev.js"]
+   :app/prod-js        ["/js/prod.js"]
+   :app/main-ns        "cryma.cryma"
+   }]
+
+ ;;::::::::::::::::::::::::::::::::::::::::::::::::::::::
+ ;;;;;;;;;;;;;;;;;;;;;Access levels
+ [
+  {:db/id                    #db/id[:db.part/app]
+   :db/ident                 :access-level/omega
+   :db/doc                   "Anonymous guest access"
+   :sys/entity               :entity.sys/access-level
+   :access-level/name        "Гость"
+   :access-level/assignable? true
+   :access-level/permission
+                             [{:permission/access-category
+                               :access-category/open
+                               :permission/permitted-action
+                               [:action.app/read-post
+                                :action.app/read-post-discussion
+                                :action.app/read-hub
+                                :action.app/browse-user-profiles
+                                :action.app/read-user-profile]
+                               }
+                              {:permission/access-category
+                               :access-category/open-premium
+                               :permission/permitted-action
+                               [:action.app/read-post-preview
+                                :action.app/read-hub
+                                :action.app/browse-user-profiles
+                                :action.app/read-user-profile]
+                               }
+                              {:permission/access-category
+                               :access-category/administrative
+                               :permission/permitted-action
+                               [:action.app/read-own-tracker
+                                :action.app/read-own-profile]}]
+   }
+  {:db/id             #db/id[:db.part/app]
+   :db/ident          :access-level/omega-authenticated
+   :db/doc            "Authenticated guest access"
+   :sys/entity        :entity.sys/access-level
+   :access-level/name "Omega auth"
+   :access-level/permission
+                      [{:permission/access-category
+                        :access-category/open
+                        :permission/permitted-action
+                        [:action.app/read-post
+                         :action.app/read-post-discussion
+                         :action.app/read-hub
+                         :action.app/browse-user-profiles
+                         :action.app/read-user-profile]
+                        }
+                       {:permission/access-category
+                        :access-category/open-premium
+                        :permission/permitted-action
+                        [:action.app/read-post-preview
+                         :action.app/read-hub
+                         :action.app/browse-user-profiles
+                         :action.app/read-user-profile]
+                        }
+                       {:permission/access-category
+                        :access-category/administrative
+                        :permission/permitted-action
+                        [:action.app/read-own-tracker
+                         :action.app/read-own-profile]}]
+   }
+  {:db/id                    #db/id[:db.part/app]
+   :db/ident                 :access-level/zeta
+   :db/doc                   "Access to public discussions"
+   :sys/entity               :entity.sys/access-level
+   :access-level/name        "Новичок"
+   :access-level/assignable? true
+   :access-level/for-sale    true
+   :access-level/permission
+                             [{:permission/access-category
+                               :access-category/open
+                               :permission/permitted-action
+                               [:action.app/read-post
+                                :action.app/read-post-discussion
+                                :action.app/rate-post
+                                :action.app/favorite-post
+                                :action.app/rate-comment
+                                :action.app/write-comment
+                                :action.app/edit-own-comment
+                                :action.app/read-hub
+                                :action.app/join-hub
+                                :action.app/browse-user-profiles
+                                :action.app/read-user-profile
+                                :action.app/subscribe-user]
+                               }
+                              {:permission/access-category
+                               :access-category/open-premium
+                               :permission/permitted-action
+                               [:action.app/read-post
+                                :action.app/read-post-discussion
+                                :action.app/rate-post
+                                :action.app/favorite-post
+                                :action.app/rate-comment
+                                :action.app/write-comment
+                                :action.app/edit-own-comment
+                                :action.app/read-hub
+                                :action.app/join-hub
+                                :action.app/browse-user-profiles
+                                :action.app/read-user-profile
+                                :action.app/subscribe-user]
+                               }
+                              {:permission/access-category
+                               :access-category/administrative
+                               :permission/permitted-action
+                               [:action.app/read-own-tracker
+                                :action.app/read-own-profile
+                                :action.app/edit-own-profile]
+                               }]
+   }
+  {:db/id                    #db/id[:db.part/app]
+   :db/ident                 :access-level/gamma
+   :db/doc                   "Access to restricted reading"
+   :sys/entity               :entity.sys/access-level
+   :access-level/name        "Аналитик"
+   :access-level/assignable? true
+   :access-level/for-sale    true
+   :access-level/permission
+                             [{:permission/access-category
+                               :access-category/open
+                               :permission/permitted-action
+                               [:action.app/create-post
+                                :action.app/edit-own-post
+                                :action.app/read-post
+                                :action.app/read-post-discussion
+                                :action.app/rate-post
+                                :action.app/favorite-post
+                                :action.app/rate-comment
+                                :action.app/write-comment
+                                :action.app/edit-own-comment
+                                :action.app/read-hub
+                                :action.app/join-hub
+                                :action.app/browse-user-profiles
+                                :action.app/read-user-profile
+                                :action.app/subscribe-user]
+                               }
+                              {:permission/access-category
+                               :access-category/open-premium
+                               :permission/permitted-action
+                               [:action.app/read-post
+                                :action.app/read-post-discussion
+                                :action.app/rate-post
+                                :action.app/favorite-post
+                                :action.app/rate-comment
+                                :action.app/write-comment
+                                :action.app/edit-own-comment
+                                :action.app/read-hub
+                                :action.app/join-hub
+                                :action.app/browse-user-profiles
+                                :action.app/read-user-profile
+                                :action.app/subscribe-user]
+                               }
+                              {:permission/access-category
+                               :access-category/restricted
+                               :permission/permitted-action
+                               [:action.app/read-post
+                                :action.app/read-post-discussion
+                                :action.app/read-hub
+                                :action.app/join-hub
+                                :action.app/browse-user-profiles
+                                :action.app/read-user-profile
+                                :action.app/subscribe-user]
+                               }
+                              {:permission/access-category
+                               :access-category/administrative
+                               :permission/permitted-action
+                               [:action.app/read-own-tracker
+                                :action.app/read-own-profile
+                                :action.app/edit-own-profile]
+                               }]
+   }
+  {:db/id                    #db/id[:db.part/app]
+   :db/ident                 :access-level/betta
+   :db/doc                   "Access to restricted discussions"
+   :sys/entity               :entity.sys/access-level
+   :access-level/name        "Критик"
+   :access-level/assignable? true
+   :access-level/for-sale    true
+   :access-level/permission
+                             [{:permission/access-category
+                               :access-category/open
+                               :permission/permitted-action
+                               [:action.app/create-post
+                                :action.app/edit-own-post
+                                :action.app/read-post
+                                :action.app/read-post-discussion
+                                :action.app/rate-post
+                                :action.app/favorite-post
+                                :action.app/rate-comment
+                                :action.app/write-comment
+                                :action.app/edit-own-comment
+                                :action.app/read-hub
+                                :action.app/join-hub
+                                :action.app/browse-user-profiles
+                                :action.app/read-user-profile
+                                :action.app/subscribe-user]
+                               }
+                              {:permission/access-category
+                               :access-category/open-premium
+                               :permission/permitted-action
+                               [:action.app/create-post
+                                :action.app/edit-own-post
+                                :action.app/read-post
+                                :action.app/read-post-discussion
+                                :action.app/rate-post
+                                :action.app/favorite-post
+                                :action.app/rate-comment
+                                :action.app/write-comment
+                                :action.app/edit-own-comment
+                                :action.app/read-hub
+                                :action.app/join-hub
+                                :action.app/browse-user-profiles
+                                :action.app/read-user-profile
+                                :action.app/subscribe-user]
+                               }
+                              {:permission/access-category
+                               :access-category/restricted
+                               :permission/permitted-action
+                               [:action.app/create-post
+                                :action.app/edit-own-post
+                                :action.app/read-post
+                                :action.app/read-post-discussion
+                                :action.app/rate-post
+                                :action.app/favorite-post
+                                :action.app/rate-comment
+                                :action.app/write-comment
+                                :action.app/edit-own-comment
+                                :action.app/read-hub
+                                :action.app/join-hub
+                                :action.app/browse-user-profiles
+                                :action.app/read-user-profile
+                                :action.app/subscribe-user]
+                               }
+                              {:permission/access-category
+                               :access-category/administrative
+                               :permission/permitted-action
+                               [:action.app/read-own-tracker
+                                :action.app/read-own-profile
+                                :action.app/edit-own-profile]
+                               }]
+   }
+  {:db/id                    #db/id[:db.part/app]
+   :db/ident                 :access-level/alpha
+   :db/doc                   "Authoritative access"
+   :sys/entity               :entity.sys/access-level
+   :access-level/name        "Автор"
+   :access-level/assignable? true
+   :access-level/for-sale    true
+   :access-level/permission
+                             [{:permission/access-category
+                               :access-category/open
+                               :permission/permitted-action
+                               [:action.app/create-post
+                                :action.app/read-post
+                                :action.app/read-post-discussion
+                                :action.app/rate-post
+                                :action.app/favorite-post
+                                :action.app/rate-comment
+                                :action.app/write-comment
+                                :action.app/edit-own-comment
+                                :action.app/create-post
+                                :action.app/edit-own-post
+                                :action.app/read-hub
+                                :action.app/join-hub
+                                :action.app/create-hub
+                                :action.app/browse-user-profiles
+                                :action.app/browse-users
+                                :action.app/read-user-profile
+                                :action.app/read-user
+                                :action.app/subscribe-user]
+                               }
+                              {:permission/access-category
+                               :access-category/open-premium
+                               :permission/permitted-action
+                               [:action.app/create-post
+                                :action.app/read-post
+                                :action.app/read-post-discussion
+                                :action.app/rate-post
+                                :action.app/favorite-post
+                                :action.app/rate-comment
+                                :action.app/write-comment
+                                :action.app/edit-own-comment
+                                :action.app/read-hub
+                                :action.app/join-hub
+                                :action.app/create-hub
+                                :action.app/browse-user-profiles
+                                :action.app/browse-users
+                                :action.app/read-user-profile
+                                :action.app/read-user
+                                :action.app/subscribe-user]
+                               }
+                              {:permission/access-category
+                               :access-category/restricted
+                               :permission/permitted-action
+                               [:action.app/create-post
+                                :action.app/read-post
+                                :action.app/read-post-discussion
+                                :action.app/rate-post
+                                :action.app/favorite-post
+                                :action.app/rate-comment
+                                :action.app/write-comment
+                                :action.app/edit-own-comment
+                                :action.app/create-post
+                                :action.app/edit-own-post
+                                :action.app/read-hub
+                                :action.app/join-hub
+                                :action.app/create-hub
+                                :action.app/browse-user-profiles
+                                :action.app/browse-users
+                                :action.app/read-user-profile
+                                :action.app/read-user
+                                :action.app/subscribe-user]
+                               }
+                              {:permission/access-category
+                               :access-category/administrative
+                               :permission/permitted-action
+                               [:action.app/read-own-tracker
+                                :action.app/read-own-profile
+                                :action.app/edit-own-profile]
+                               }]
+   }
+  {:db/id                    #db/id[:db.part/app]
+   :db/ident                 :access-level/alpha-admin
+   :db/doc                   "Administrative access"
+   :sys/entity               :entity.sys/access-level
+   :access-level/name        "Администратор"
+   :access-level/assignable? true
+   :access-level/permission
+                             [{:permission/access-category
+                               :access-category/open
+                               :permission/permitted-action
+                               [:action.app/create-post
+                                :action.app/read-post
+                                :action.app/read-post-discussion
+                                :action.app/rate-post
+                                :action.app/favorite-post
+                                :action.app/rate-comment
+                                :action.app/write-comment
+                                :action.app/edit-own-comment
+                                :action.app/create-post
+                                :action.app/edit-own-post
+                                :action.app/read-hub
+                                :action.app/join-hub
+                                :action.app/create-hub
+                                :action.app/browse-user-profiles
+                                :action.app/browse-users
+                                :action.app/read-user-profile
+                                :action.app/read-user
+                                :action.app/subscribe-user]
+                               }
+                              {:permission/access-category
+                               :access-category/open-premium
+                               :permission/permitted-action
+                               [:action.app/create-post
+                                :action.app/read-post
+                                :action.app/read-post-discussion
+                                :action.app/rate-post
+                                :action.app/favorite-post
+                                :action.app/rate-comment
+                                :action.app/write-comment
+                                :action.app/edit-own-comment
+                                :action.app/read-hub
+                                :action.app/join-hub
+                                :action.app/create-hub
+                                :action.app/browse-user-profiles
+                                :action.app/browse-users
+                                :action.app/read-user-profile
+                                :action.app/read-user
+                                :action.app/subscribe-user]
+                               }
+                              {:permission/access-category
+                               :access-category/restricted
+                               :permission/permitted-action
+                               [:action.app/create-post
+                                :action.app/read-post
+                                :action.app/read-post-discussion
+                                :action.app/rate-post
+                                :action.app/favorite-post
+                                :action.app/rate-comment
+                                :action.app/write-comment
+                                :action.app/edit-own-comment
+                                :action.app/create-post
+                                :action.app/edit-own-post
+                                :action.app/read-hub
+                                :action.app/join-hub
+                                :action.app/create-hub
+                                :action.app/browse-user-profiles
+                                :action.app/browse-users
+                                :action.app/read-user-profile
+                                :action.app/read-user
+                                :action.app/subscribe-user]
+                               }
+                              {:permission/access-category
+                               :access-category/administrative
+                               :permission/permitted-action
+                               [:action.app/read-own-tracker
+                                :action.app/read-own-profile
+                                :action.app/edit-own-profile
+                                :action.adm/users
+                                :action.adm/hubs
+                                :action.adm/billing
+                                :action.adm/browse-users
+                                :action.adm/read-user
+                                :action.adm/create-user
+                                :action.adm/update-user
+                                :action.adm/remove-user
+                                :action.adm/browse-hubs
+                                :action.adm/read-hub
+                                :action.adm/create-hub
+                                :action.adm/update-hub
+                                :action.adm/remove-hub
+                                :action.adm/access-level-search
+                                :action.adm/access-category-search
+                                :action.adm/billing-browse-orders
+                                :action.adm/billing-get-balance
+                                :action.adm/billing-force-forwarding
+                                ]
+                               }]
+   }
+  ]
+ ;;::::::::::::::::::::::::::::::::::::::::::::::::::::::
+ ;;;;;;;;;;;;;;;;;;;;;Default users
+ [
+  {:db/id               #db/id[:db.part/users]
+   :db/ident            :sys.users/guest
+   :db/doc              "Anonymous guest user"
+   :sys/access-category :access-category/administrative
+   :sys/entity          :entity.sys/user
+   :user/nickname       "Гость"
+   :user/built-in       true
+   :user/is-sys         true
+   :user/access-level   :access-level/omega
+   }
+  {:db/id               #db/id[:db.part/users]
+   :db/ident            :sys.users/guest-authenticated
+   :db/doc              "Authenticated guest user"
+   :sys/access-category :access-category/administrative
+   :sys/entity          :entity.sys/user
+   :user/nickname       "Гость*"
+   :user/built-in       true
+   :user/is-sys         true
+   :user/access-level   :access-level/omega-authenticated
+   }
+  {:db/id               #db/id[:db.part/users]
+   :db/ident            :sys.users/root
+   :db/doc              "Root user"
+   :sys/access-category :access-category/administrative
+   :sys/entity          :entity.sys/user
+   :user/nickname       "Root"
+   :user/built-in       true
+   :user/is-sys         true
+   :user/access-level   :access-level/alpha-admin
+   }
+  {:db/id               #db/id[:db.part/users]
+   :db/ident            :sys.users/billing
+   :db/doc              "Billing system"
+   :sys/access-category :access-category/administrative
+   :sys/entity          :entity.sys/user
+   :user/nickname       "Billing"
+   :user/built-in       true
+   :user/is-sys         true
+   :user/access-level   :access-level/alpha-admin
+   }
+  ]
+ ]

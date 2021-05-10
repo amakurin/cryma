@@ -1,0 +1,146 @@
+.page .head .switch li.new-sr {
+    background: #8ac911;
+}
+
+.page .head .switch li.new-sr:hover {
+    background-color: #93d416;
+}
+
+.page .head .switch li.active.new-sr {
+    background: #aaec2b;
+}
+
+.drop-down li .trivial, .severity.trivial {
+    color: #6ed737;
+}
+
+.drop-down li.current .trivial {
+    color: #afff7e;
+}
+
+.drop-down li .minor, .severity.minor {
+    color: #a6cc12;
+}
+
+.drop-down li.current .minor {
+    color: #e3ff7b;
+}
+
+.drop-down li .medium, .severity.medium {
+    color: #d7b432;
+}
+
+.drop-down li.current .medium {
+    color: #ffe067;
+}
+
+.drop-down li .major, .severity.major {
+    color: #d76c3a;
+}
+
+.drop-down li.current .major {
+    color: #ffae85;
+}
+
+.drop-down li .critical, .severity.critical {
+    color: #d73736;
+}
+
+.drop-down li.current .critical {
+    color: #ffa3a5;
+}
+
+.helpdesk .menu-item-icon:before, .helpdesk-adm .menu-item-icon:before {
+    content: "\00f1cd";
+}
+
+.sr-description .val, .sr-body .val {
+    font-weight: normal;
+}
+
+.sys-description .full-editor.rte-container {
+    height: 150px;
+}
+
+.helpdesk .browser li.row {
+    margin: 10px 0;
+    border-bottom: 1px solid #9ca6c5;
+}
+
+.support-request-body .full-editor.rte-container {
+    height: 250px;
+}
+
+.support-request .discussion {
+    border-top: 1px solid #9ca6c5;
+}
+
+.support-request .discussion span.answer {
+    margin: 0;
+    padding: 0;
+}
+
+.helpdesk-title {
+    margin-right: 10px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.helpdesk .page > h1 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.page.support-request h1 {
+    margin-bottom: 5px;
+}
+
+.support-request .status {
+    font-weight: normal;
+}
+
+.support-request .status:before {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    font-size: 16px;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+}
+
+.support-request .status.open {
+    color: #AB2304;
+}
+
+.support-request .status.open:before {
+    content: "\00f12a";
+}
+
+.support-request .status.close {
+    color: #6AA200;
+}
+
+.support-request .status.close:before {
+    content: "\00f00c";
+}
+
+.status-change {
+    display: inline-block;
+    margin-left: 10px;
+    border-radius: 3px;
+    padding: 5px 10px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.status-change.do-close {
+    background: #6AA200;
+}
+
+.status-change.do-reopen {
+    background: #575E75;
+}

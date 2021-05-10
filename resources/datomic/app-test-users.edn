@@ -1,0 +1,63 @@
+;;::::::::::::::::::::::::::::::::::::::::::::::::::::::
+;;;;;;;;;;;;;;;;;;;;;TEST users
+[
+ {:db/id               #db/id[:db.part/users]
+  :db/ident            :test.users/A
+  :db/doc              "A user"
+  :sys/entity          :entity.sys/user
+  :sys/date            #inst "2016-01-03T14:55:47.591-00:00"
+  :sys/access-category :access-category/open
+  :user/nickname       "Test-User-A"
+  :user/login          "test-a"
+  :user/pwd-hash       "$2a$10$C.zbFCXSCtClnfgW1jIhheodreIEwuniuqU5gDZnFAwR/sKixWPD2"
+  :user/access-level   :access-level/zeta
+  :user/about          "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p></body></html>"
+  }
+ {:db/id               #db/id[:db.part/users]
+  :db/ident            :test.users/B
+  :db/doc              "B user"
+  :sys/entity          :entity.sys/user
+  :sys/date            #inst "2016-01-01T14:55:47.591-00:00"
+  :sys/access-category :access-category/open
+  :user/nickname       "Test-User-B"
+  :user/login          "test-b"
+  :user/pwd-hash       "$2a$10$C.zbFCXSCtClnfgW1jIhheodreIEwuniuqU5gDZnFAwR/sKixWPD2"
+  :user/access-level   :access-level/gamma
+  }
+ {:db/id               #db/id[:db.part/users]
+  :db/ident            :test.users/C
+  :db/doc              "C user"
+  :sys/entity          :entity.sys/user
+  :sys/date            #inst "2016-01-07T14:55:47.591-00:00"
+  :sys/access-category :access-category/open
+  :user/nickname       "Test-User-C"
+  :user/login          "test-c"
+  :user/pwd-hash       "$2a$10$C.zbFCXSCtClnfgW1jIhheodreIEwuniuqU5gDZnFAwR/sKixWPD2"
+  :user/access-level   :access-level/betta
+  }
+
+ {:db/id               #db/id[:db.part/users]
+  :db/ident            :test.users/expired
+  :db/doc              "Expired user"
+  :sys/entity          :entity.sys/user
+  :sys/date            #inst "2016-01-01T14:55:47.591-00:00"
+  :sys/access-category :access-category/open
+  :user/nickname       "Test-User-E"
+  :user/login          "test-e"
+  :user/pwd-hash       "$2a$10$C.zbFCXSCtClnfgW1jIhheodreIEwuniuqU5gDZnFAwR/sKixWPD2"
+  :user/access-expiry  #inst"2016-01-01T17:25:45.256-00:00"
+  :user/access-level   :access-level/betta
+  }
+
+ {:db/id               #db/id[:db.part/users]
+  :db/ident            :test.users/ADM
+  :db/doc              "ADM user"
+  :sys/entity          :entity.sys/user
+  :sys/date            #inst "2016-01-07T14:55:47.591-00:00"
+  :sys/access-category :access-category/open
+  :user/nickname       "Test-User-ADM"
+  :user/login          "test-adm"
+  :user/pwd-hash       "$2a$10$C.zbFCXSCtClnfgW1jIhheodreIEwuniuqU5gDZnFAwR/sKixWPD2"
+  :user/access-level   :access-level/alpha-admin
+  }
+ ]

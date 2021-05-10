@@ -1,0 +1,15 @@
+;;::::::::::::::::::::::::::::::::::::::::::::::::::::::
+;;;;;;;;;;;;;;;;;;;;;PROD users
+[
+ {:db/id               #db/id[:db.part/users]
+  :db/ident            :prod/root-admin
+  :db/doc              "Root-admin"
+  :sys/entity          :entity.sys/user
+  :sys/date            #inst "2016-01-03T14:55:47.591-00:00"
+  :sys/access-category :access-category/open
+  :user/nickname       "BlackSunEmpire"
+  :user/login          "black-sun-empire"
+  :user/pwd-hash       "$2a$10$C.zbFCXSCtClnfgW1jIhheodreIEwuniuqU5gDZnFAwR/sKixWPD2"
+  :user/access-level   :access-level/alpha-admin
+  }
+ ]

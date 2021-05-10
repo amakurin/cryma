@@ -1,0 +1,419 @@
+;;::::::::::::::::::::::::::::::::::::::::::::::::::::::
+;;;;;;;;;;;;;;;;;;;;;TEST users
+[
+ [{:db/id               #db/id[:db.part/hubs]
+   :db/ident            :test.hubs/A
+   :sys/entity          :entity.app/hub
+   :hub/name            "тест хаб А"
+   :hub/description     "описание тестового хаба"
+   :sys/access-category :access-category/open
+   }
+  {:db/id               #db/id[:db.part/hubs]
+   :db/ident            :test.hubs/B
+   :sys/entity          :entity.app/hub
+   :hub/name            "т хаб Б"
+   :hub/description     "описание тстового хаба"
+   :sys/access-category :access-category/open
+   }
+  {:db/id               #db/id[:db.part/hubs]
+   :db/ident            :test.hubs/C
+   :sys/entity          :entity.app/hub
+   :hub/name            "тст хаб Ц"
+   :hub/description     "описание хаба"
+   :sys/access-category :access-category/restricted
+   }
+  {:db/id               #db/id[:db.part/hubs]
+   :db/ident            :test.hubs/D
+   :sys/entity          :entity.app/hub
+   :hub/name            "test hub D"
+   :hub/description     "test descr"
+   :sys/access-category :access-category/open
+   }
+  {:db/id               #db/id[:db.part/hubs]
+   :db/ident            :test.hubs/E
+   :sys/entity          :entity.app/hub
+   :hub/name            "test hub E"
+   :hub/description     "test descr eng"
+   :sys/access-category :access-category/open-premium
+   }
+  {:db/id               #db/id[:db.part/hubs]
+   :db/ident            :test.hubs/F
+   :sys/entity          :entity.app/hub
+   :hub/name            "tst hub F"
+   :hub/description     "tst dscr eng"
+   :sys/access-category :access-category/restricted
+   }
+  ;; TAGS
+  {:db/id      #db/id[:db.part/tags]
+   :db/ident   :test.tag/A
+   :sys/entity :entity.app/tag
+   :tag/title  "Test tag A"
+   }
+  {:db/id      #db/id[:db.part/tags]
+   :db/ident   :test.tag/B
+   :sys/entity :entity.app/tag
+   :tag/title  "Test tag B"
+   }
+  {:db/id      #db/id[:db.part/tags]
+   :db/ident   :test.tag/C
+   :sys/entity :entity.app/tag
+   :tag/title  "Test tag C"
+   }
+  {:db/id      #db/id[:db.part/tags]
+   :db/ident   :test.tag/D
+   :sys/entity :entity.app/tag
+   :tag/title  "Тестовый тег Д"
+   }
+  {:db/id      #db/id[:db.part/tags]
+   :db/ident   :test.tag/E
+   :sys/entity :entity.app/tag
+   :tag/title  "Тестовый тег Е"
+   }
+  {:db/id      #db/id[:db.part/tags]
+   :db/ident   :test.tag/F
+   :sys/entity :entity.app/tag
+   :tag/title  "Тестовый тег Ф"
+   }]
+
+ [
+  {:db/id               #db/id[:db.part/posts]
+   :db/ident            :test.post/A
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open
+   :sys/date            #inst "2016-01-01T14:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/C
+   :post/hub            [:test.hubs/D :test.hubs/E :test.hubs/F]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open-premium
+   :sys/date            #inst "2016-01-02T14:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/C
+   :post/hub            [:test.hubs/D :test.hubs/F]
+   :post/tag            [:test.tag/A :test.tag/B]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/restricted
+   :sys/date            #inst "2016-01-03T14:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/C
+   :post/hub            [:test.hubs/A :test.hubs/B]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open
+   :sys/date            #inst "2016-01-04T14:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/B
+   :post/hub            [:test.hubs/D :test.hubs/E :test.hubs/F]
+   :post/tag            [:test.tag/C :test.tag/D]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open
+   :sys/date            #inst "2016-01-05T14:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/A
+   :post/hub            [:test.hubs/E]
+   :post/tag            [:test.tag/C :test.tag/E]}
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open
+   :sys/date            #inst "2016-01-06T14:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/C
+   :post/hub            [:test.hubs/D :test.hubs/E :test.hubs/F]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open-premium
+   :sys/date            #inst "2016-01-07T14:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/C
+   :post/hub            [:test.hubs/D :test.hubs/F]
+   :post/tag            [:test.tag/A :test.tag/B]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/restricted
+   :sys/date            #inst "2016-01-08T14:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/C
+   :post/hub            [:test.hubs/A :test.hubs/B]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open
+   :sys/date            #inst "2016-01-09T14:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/B
+   :post/hub            [:test.hubs/D :test.hubs/E :test.hubs/F]
+   :post/tag            [:test.tag/C :test.tag/D]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open
+   :sys/date            #inst "2016-01-10T14:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/A
+   :post/hub            [:test.hubs/E]
+   :post/tag            [:test.tag/C :test.tag/E]}
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open
+   :sys/date            #inst "2016-01-11T14:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/C
+   :post/hub            [:test.hubs/D :test.hubs/E :test.hubs/F]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open-premium
+   :sys/date            #inst "2016-01-12T14:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/C
+   :post/hub            [:test.hubs/D :test.hubs/F]
+   :post/tag            [:test.tag/A :test.tag/B]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/restricted
+   :sys/date            #inst "2016-01-13T14:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/C
+   :post/hub            [:test.hubs/A :test.hubs/B]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open
+   :sys/date            #inst "2016-01-14T14:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/B
+   :post/hub            [:test.hubs/D :test.hubs/E :test.hubs/F]
+   :post/tag            [:test.tag/C :test.tag/D]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open
+   :sys/date            #inst "2016-01-15T14:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/A
+   :post/hub            [:test.hubs/E]
+   :post/tag            [:test.tag/C :test.tag/E]}
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open
+   :sys/date            #inst "2016-01-15T10:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/C
+   :post/hub            [:test.hubs/D :test.hubs/E :test.hubs/F]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open-premium
+   :sys/date            #inst "2016-01-15T11:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/C
+   :post/hub            [:test.hubs/D :test.hubs/F]
+   :post/tag            [:test.tag/A :test.tag/B]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/restricted
+   :sys/date            #inst "2016-01-15T12:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/C
+   :post/hub            [:test.hubs/A :test.hubs/B]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open
+   :sys/date            #inst "2016-01-15T13:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/B
+   :post/hub            [:test.hubs/D :test.hubs/E :test.hubs/F]
+   :post/tag            [:test.tag/C :test.tag/D]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open
+   :sys/date            #inst "2016-01-15T14:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/A
+   :post/hub            [:test.hubs/E]
+   :post/tag            [:test.tag/C :test.tag/E]}
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open
+   :sys/date            #inst "2016-01-15T15:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/C
+   :post/hub            [:test.hubs/D :test.hubs/E :test.hubs/F]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open-premium
+   :sys/date            #inst "2016-01-16T14:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/C
+   :post/hub            [:test.hubs/D :test.hubs/F]
+   :post/tag            [:test.tag/A :test.tag/B]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/restricted
+   :sys/date            #inst "2016-01-16T15:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/C
+   :post/hub            [:test.hubs/A :test.hubs/B]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open
+   :sys/date            #inst "2016-01-16T15:57:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/B
+   :post/hub            [:test.hubs/D :test.hubs/E :test.hubs/F]
+   :post/tag            [:test.tag/C :test.tag/D]}
+
+  {:db/id               #db/id[:db.part/posts]
+   :sys/entity          :entity.app/post
+   :sys/access-category :access-category/open
+   :sys/date            #inst "2016-01-14T05:55:47.591-00:00"
+   :post/title          "Почему ваш любимый мессенджер должен умереть",
+   :post/preview        "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области интернет-коммуникаций, угрожающая перспектива развития инструментов для обмена мгновенными сообщениями, аудио-видеозвонками и надоевшие споры о том, какой же мессенджер все-таки хороший, правильный и безопасный.Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. </span></p><a data-keks=\"{:type :block, :semantics :cut}\" id=\"cut\" class=\"cut\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Читать далее...</span></p></a></body></html>",
+   :post/undercut       "<html><head></head><body data-keks=\"{:type :block, :semantics :document}\"><p data-keks=\"{:type :line, :semantics :generic-line}\"><span data-keks=\"{:type :material, :semantics :text}\">Только ленивый сейчас не пишет свой мессенджер. Каждый день выходит новое приложение, обещающее совершить революцию в способах коммуникации. Доходит даже до абсурда вроде приложения Yo, позволяющего слать друг другу только одно слово. У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми.</span></p></body></html>"
+   :sys/author          :test.users/A
+   :post/hub            [:test.hubs/E]
+   :post/tag            [:test.tag/C :test.tag/E]}
+  ]
+ [{:db/id          #db/id[:db.part/comments 10]
+   :sys/entity     :entity.app/comment
+   :sys/date   #inst "2016-01-14T05:55:47.591-00:00"
+   :comment/body   "У каждого мессенджера есть своя аудитория, агитирующая пользоваться именно их любимым сервисом. В итоге приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений, чтобы иметь возможность оперативно связаться со всеми необходимыми людьми. "
+   :sys/anchor :test.post/A
+   :sys/author :test.users/A}
+
+  {:db/id          #db/id[:db.part/comments 110]
+   :sys/entity     :entity.app/comment
+   :sys/date   #inst "2016-01-14T06:55:47.591-00:00"
+   :comment/body   "На написание этого текста меня подтолкнула ужасающая ситуация, сложившаяся в области"
+   :sys/anchor #db/id[:db.part/comments 10]
+   :sys/author :test.users/B}
+
+  {:db/id          #db/id[:db.part/comments]
+   :sys/entity     :entity.app/comment
+   :sys/date   #inst "2016-01-14T07:55:47.591-00:00"
+   :comment/body   "приходится заводить кучу учетных записей в различных сервисах и устанавливать кучу приложений"
+   :sys/anchor #db/id[:db.part/comments 10]
+   :sys/author :test.users/C}
+
+  {:db/id          #db/id[:db.part/comments 120]
+   :sys/entity     :entity.app/comment
+   :sys/date   #inst "2016-01-14T08:55:47.591-00:00"
+   :comment/body   "приходится заводить"
+   :sys/anchor #db/id[:db.part/comments 110]
+   :sys/author :test.users/C}
+
+  {:db/id          #db/id[:db.part/comments]
+   :sys/entity     :entity.app/comment
+   :sys/date   #inst "2016-01-14T09:55:47.591-00:00"
+   :comment/body   "приходится!!!!"
+   :sys/anchor #db/id[:db.part/comments 120]
+   :sys/author :test.users/C}
+
+  {:db/id          #db/id[:db.part/comments 20]
+   :sys/entity     :entity.app/comment
+   :sys/date   #inst "2016-01-14T05:50:47.591-00:00"
+   :comment/body   "В итоге приходится заводить кучу "
+   :sys/anchor :test.post/A
+   :sys/author :test.users/B}
+
+  {:db/id          #db/id[:db.part/comments]
+   :sys/entity     :entity.app/comment
+   :sys/date   #inst "2016-01-14T05:51:47.591-00:00"
+   :comment/body   "Сдохни гнида!!!"
+   :sys/anchor #db/id[:db.part/comments 20]
+   :sys/author :test.users/B}
+
+  {:db/id          #db/id[:db.part/comments 30]
+   :sys/entity     :entity.app/comment
+   :sys/date   #inst "2016-01-14T05:51:47.591-00:00"
+   :comment/body   "Последние годы конкуренция на рынке мессенджеров как никогда высока. Доступный интернет у каждого в смартфоне позволил мессенджерам стать самыми часто используемыми приложениями. Только ленивый сейчас не пишет свой мессенджер."
+   :sys/anchor :test.post/A
+   :sys/author :test.users/C}
+
+  {:db/id          #db/id[:db.part/comments]
+   :sys/entity     :entity.app/comment
+   :sys/date   #inst "2016-01-14T05:52:47.591-00:00"
+   :comment/body   "I gueas you are WRONG!!!"
+   :sys/anchor #db/id[:db.part/comments 30]
+   :sys/author :test.users/C}
+
+  {:db/id          #db/id[:db.part/comments]
+   :sys/entity     :entity.app/comment
+   :sys/date   #inst "2016-01-14T05:55:47.591-00:00"
+   :comment/body   "ко ленивый сейчас не пишет свой мессенджер."
+   :sys/anchor :test.post/A
+   :sys/author :test.users/C}
+
+  {:db/id          #db/id[:db.part/comments]
+   :sys/entity     :entity.app/comment
+   :sys/date   #inst "2016-01-14T05:56:47.591-00:00"
+   :comment/body   "The query above has one variable ?e, and will take one input, a collection of tuples with at least three components."
+   :sys/anchor :test.post/A
+   :sys/author :test.users/B}
+
+  ]
+ ]

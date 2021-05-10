@@ -1,0 +1,495 @@
+.promo.page {
+    max-width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.promo.page h1 {
+    margin-bottom: 40px;
+}
+
+.buy-block {
+    background: #fff;
+    border: 1px solid #e3e7f7;
+    border-bottom: 0;
+    margin: 0 auto 60px;
+    max-width: 960px;
+    text-align: left;
+}
+
+.buy-block.confirmation{
+    padding: 20px;
+    border-bottom: 1px solid #e3e7f7;
+    max-width: 500px;
+}
+
+.buy-block.confirmation #product-field,
+.buy-block.confirmation #time-frame-field,
+.buy-block.confirmation #amount-field,
+.buy-block.confirmation #base-amount-field
+{
+    color: #2b3042;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.buy-block.confirmation #base-amount-field {
+    color: #9CA6C5;
+}
+
+.buy-block.confirmation #amount-field.negative {
+    color: #E26E6E;
+}
+
+.buy-block.confirmation .pay.btn{
+    background: #3599EF;
+    color: white;
+}
+
+.buy-block.confirmation .form{
+    margin: 0 auto;
+}
+
+.paid {
+    text-align: center;
+}
+
+.paid .message:before {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\00f00c";
+    margin-left: 5px;
+    font-size: 26px;
+}
+
+.paid .message{
+    padding: 10px;
+}
+
+.paid .auth{
+
+}
+
+.paid .message:before {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\00f00c";
+    margin-right: 5px;
+    font-size: 20px;
+    color: #3599EF;
+}
+
+.frow.order{
+    height: 56px;
+    padding: 0 10px;
+}
+
+.frow.order .ph{
+    position: relative;
+    display: block;
+    left: 0;
+    margin-bottom: 10px;
+}
+
+.frow.order .value{
+
+}
+
+.account-data {
+    margin: 0 0 10px 0;
+}
+
+.pay-request {
+    border-radius: 3px;
+    border: 1px dashed #e3e7f7;
+    padding: 10px;
+}
+
+.pay-request .paygate-amount {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+.pay-request .paygate-amount .amount{
+    border-bottom: 1px dashed #2b3042;
+}
+
+.pay-request .paygate-amount:after {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\00f15a";
+    margin-left: 5px;
+    font-size: 26px;
+}
+
+.pay-request .paygate-address {
+    display: block;
+    text-align: center;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+.pay-request .paygate-address .address{
+    border-bottom: 1px dashed #2b3042;
+}
+
+.bar {
+    height: 35px;
+    position: relative;
+    background: rgba(53, 153, 239, 0.15);
+    margin: 10px 0;
+}
+
+.bar .inner {
+    background: #3599EF;
+    height: 35px;
+}
+
+.bar .current-time-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    text-align: center;
+    line-height: 35px;
+}
+
+.cancelled .message,
+.partially-paid,
+.negative-notice{
+    text-align: center;
+    color: #E26E6E;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.negative-notice {
+    padding: 0;
+}
+
+.cancelled .message {
+    padding: 10px 0 0;
+}
+
+.progress {
+    text-align: center;
+}
+
+.progress .expired {
+    margin: 0 0 20px 0;
+}
+
+.progress .expired .message {
+    text-align: center;
+    padding: 10px;
+}
+
+.progress .expired .need-more-time {
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+.pay-request .qr{
+    text-align: center;
+}
+
+.period-switch {
+    display: flex;
+    flex-wrap: nowrap;
+    margin: 0 auto;
+    justify-content: center;
+    padding: 40px 40px 30px;
+    border-bottom: 1px solid #e3e7f7;
+}
+
+.period-switch > li {
+    flex: 1 1;
+    text-align: center;
+    text-transform: capitalize;
+    margin: 0;
+    cursor: pointer;
+}
+
+.period-switch > li.active {
+}
+
+.period-markup {
+    margin-bottom: 10px;
+}
+
+.period-markup .border {
+    display: flex;
+}
+
+.period-markup .part {
+    flex: 1 1 50%;
+    background: #9ca6c5;
+    height: 6px;
+    margin: 8px -1px 0 0;
+}
+
+.period-markup .radio-button {
+    border-radius: 12px;
+    border: 2px solid #9ca6c5;
+    background: #fff;
+    flex: 0 0 17px;
+    height: 17px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 -1px;
+    z-index: 1000;
+}
+
+.period-switch>li .period-markup .radio-button:before {
+    content: ' ';
+    min-width: 11px;
+    min-height: 11px;
+    border-radius: 12px;
+    background: transparent;
+    flex: 0 0;
+    margin: 0 auto;
+}
+
+.period-switch>li:hover .period-markup .radio-button:before {
+    background: #9ca6c5;
+}
+
+.period-switch li.active  {
+    font-weight: bold;
+}
+
+.period-switch>li.active .period-markup .radio-button:before {
+    background: #434c6a;
+}
+
+.period-switch>li.active:hover .period-markup .radio-button:before {
+    background: #2b3042;
+}
+
+@media screen and (max-width: 600px) {
+    .period-switch .caption{
+        font-size: 12px;
+        padding: 0 10px;
+    }
+
+    .buy-block.confirmation{
+        max-width: 360px;
+    }
+}
+
+.pre .period-markup .radio-button,
+.active .period-markup .radio-button {
+    border-color: #434c6a;
+}
+
+.pre .period-markup .part.first,
+.pre .period-markup .part.second,
+.active .period-markup .part.first {
+    background: #434c6a;
+}
+
+.period-switch > li:first-child .part.first {
+    /*display: none; */
+    background: transparent;
+}
+
+.period-switch > li:last-child .part.second {
+    background: transparent;
+}
+
+.plans {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0;
+}
+
+.plan {
+    flex: 1 0 150px;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid #E3E7F7;
+    margin: 0 0 0 -1px;
+}
+
+.plan .inner {
+    min-width: 150px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.plan h2.title {
+    font-size: 25px;
+    text-align: center;
+    padding: 25px 0 20px;
+    margin: 0;
+    border-left: 1px solid #E3E7F7;
+}
+
+.plan .price{
+    border-left: 1px solid #d2d7ec;
+}
+
+.plan:last-child{
+    margin-right: -1px;
+}
+
+.plan:last-child h2.title{
+    border-right: 1px solid #E3E7F7;
+}
+
+.plan:last-child .price{
+    border-right: 1px solid #d2d7ec;
+}
+
+.plan:last-child .included-wrapper,
+.plan:last-child .buy{
+    border-right: 1px solid #E3E7F7;
+}
+
+.plan .short-info {
+    text-align: center;
+    font-size: 18px;
+}
+
+.plan .buy{
+    border-left: 1px solid #E3E7F7;
+    padding-bottom: 30px;
+}
+
+.plan .included {
+    margin: 0 auto;
+    max-width: 150px;
+    text-align: left;
+    padding: 20px 20px 20px 40px;
+}
+
+.plan .included-wrapper{
+    border-left: 1px solid #E3E7F7;
+}
+
+.plan .included li {
+    height: 40px;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.plan .included li:before {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\00f00c";
+    color: #3599EF;
+    font-size: 14px;
+    margin: 0 0 0 -20px;
+    padding: 0 5px 0 0;
+}
+
+.plan .included li.empty:before {
+    content: "";
+}
+
+.plan .price {
+    text-align: center;
+    margin: 0;
+    background: #E3E7F7;
+    color: #434c6a;
+    padding: 15px 10px;
+    white-space: nowrap;
+}
+
+.plan .price .amount,
+.plan .price .currency {
+    font-size: 46px;
+    line-height: 46px;
+    font-weight: bold;
+}
+
+.plan .buy-button {
+    background: #3599EF;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    cursor: pointer;
+    margin: 0 auto;
+    height: 35px;
+    max-width: 70px;
+    line-height: 35px;
+    text-align: center;
+    color: white;
+    text-transform: uppercase;
+    padding: 0 10px;
+}
+
+.plan .free {
+    margin: 0 auto;
+    height: 35px;
+    max-width: 90px;
+    line-height: 35px;
+    text-align: center;
+    color: #3599EF;
+    text-transform: uppercase;
+    padding: 0 10px;
+    border-radius: 3px;
+    border: 1px solid #3599EF;
+    cursor: pointer;
+}
+
+.faq {
+    max-width: 960px;
+    margin: 0 auto 40px;
+    text-align: left;
+}
+
+.faq-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.faq-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1360px;
+    margin: 0 auto 40px;
+}
+
+.faq-list > li {
+    flex: 1 1 360px;
+    margin: 0 40px 20px 0;
+    max-width: 545px;
+}
+
+.faq-list .question {
+
+}
+
+.faq-list .answer {
+    margin: 0;
+}
+
+.faq-list ul.answer {
+    font-size: 100%;
+    list-style-type: disc;
+    margin: 10px 20px;
+}

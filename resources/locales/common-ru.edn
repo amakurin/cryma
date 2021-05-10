@@ -1,0 +1,457 @@
+{:locale-id "ru"
+ :voc       {:links                             "Ссылки"
+             :browse-modes/new-user             "Новый пользователь"
+             :browse-modes/new-hub              "Новый хаб"
+
+             :browse-modes/billing-orders       "Заказы"
+             :browse-modes/billing-balance      "Баланс"
+             :browse-modes/billing-settings     "Настройки"
+
+             :hub-editor/save                   "Сохранить"
+             :user-editor/save                  "Сохранить"
+             :hub-editor/cancel                 "Отменить"
+             :user-editor/cancel                "Отменить"
+
+             :app/posts                         "Публикации"
+             :app/hubs                          "Хабы"
+             :app/users                         "Пользователи"
+             :app/create-post                   "Новый пост"
+             :app/tracker                       "Трэкер"
+             :app/profile                       "Профиль"
+
+             :app/my-feed                       "Моя лента"
+             :app/my-profile                    "Мои данные"
+             :app/my-posts                      "Мои публикации"
+             :app/my-comments                   "Мои комментарии"
+             :app/my-favorities                 "Моё избранное"
+             :app/my-subs                       "Мои подписчики"
+             :app.tracker/read-all-events       "Все события"
+             :app.tracker/no-events             "Нет событий"
+             :app.tracker/mark-as-read          "Отметить как прочитанное"
+
+             :app.adm/adm                       "Админка"
+             :app.adm/users                     "Пользователи"
+             :app.adm/hubs                      "Хабы"
+             :app.adm/billing                   "Биллинг"
+             :app.adm/user-profile-link         "Публичный профиль"
+             :app.adm/user-edit-link            "Изменение"
+             :app.adm/user-billing-link         "Заказы"
+             :app.adm/hub-link                  "Публичная страница"
+             :app.adm/hub-edit-link             "Изменение"
+
+             :action.adm/users                  "Управление пользователями"
+             :action.adm/read-user              "Читать данные пользователя"
+             :action.adm/browse-users           "Читать список пользователей"
+             :action.adm/create-user            "Создать пользователя"
+             :action.adm/update-user            "Изменить пользователя"
+             :action.adm/remove-user            "Удалить пользователя"
+             :action.adm/hubs                   "Управление хабами"
+             :action.adm/read-hub               "Читать данные хаба"
+             :action.adm/browse-hub             "Читать список хабов"
+             :action.adm/create-hub             "Создать хаб"
+             :action.adm/update-hub             "Изменить хаб"
+             :action.adm/remove-hub             "Удалить хаб"
+             :action.adm/billing                "Биллинг"
+
+             [:tracker-event
+              :entity.app/comment
+              :entity.app/post]                 "прокомментировал ваш пост"
+             [:tracker-event
+              :entity.app/comment
+              :entity.app/comment]              "ответил на комментарий"
+             [:tracker-event
+              :entity.app/rating
+              :entity.app/post]                 "оценил ваш пост"
+             [:tracker-event
+              :entity.app/rating
+              :entity.app/comment]              "оценил комментарий"
+             [:tracker-event
+              :entity.app/favorite
+              :entity.app/post]                 "добавил ваш пост в избранные"
+             [:tracker-event
+              :entity.app/sub
+              :entity.sys/user]                 "подписался на ваши посты"
+             [:tracker-event
+              :entity.app/sub
+              :entity.app/hub]                  "присоединился к хабу"
+
+             :promo/higher-access-required      ["Уровень доступа недостаточен для действия \"%s\"" [:denied-action]]
+
+             :promo/pay-exactly                 "Переведите в точности"
+             :promo/to-btc-address              "на биткоин адрес"
+             :promo/waiting-for-payment         ["Ожидаем оплату (%d %s максимум)"
+                                                 [:max-minutes
+                                                  {:calc [:dtlrules
+                                                          {:transk :mapping :& :mapcat-values}
+                                                          [:minute [{:asis :minute}]]
+                                                          [:max-minutes
+                                                           [{:p      :max-minutes
+                                                             :custom :plurality}]]]}]]
+             :promo/payment-time-left           ["Осталось %d:%02d"
+                                                 [:left-mins :left-secs]]
+             :promo/payment-expired-message     "Время ожидания оплаты истекло"
+             :promo/payment-need-more-time      "Мне требуется больше времени"
+             :promo/payment-instruction         "Не покидайте и не перезагружайте страницу пока не получите уведомление об оплате, иначе ваш заказ будет аннулирован."
+             :promo/paid-message                "Оплата получена"
+             :promo/paid-auth-message           "Осуществляется вход в систему..."
+             :promo/partially-paid-message      ["ВНИМАНИЕ: Получена частичная оплата в размере %sBTC, оплатите остаток" [:total-received]]
+             :promo/applied-message             "Изменения применены"
+             :promo/cancelled-message           "Время ожидания оплаты истекло. Заказ был аннулирован."
+             :promo/negative-notice             "ВНИМАНИЕ: итоговая сумма отрицательная, то есть Вы теряете часть средств, чтобы этого избежать Вы можете выбрать более длительный период"
+             :promo/negative-notice-back        "Назад к выбору периода"
+
+             :action.app/create-post            "Создать пост"
+             :action.app/read-post              "Читать пост"
+             :action.app/read-post-discussion   "Читать дискуссию"
+             :action.app/edit-post              "Редактировать пост"
+             :action.app/rate-post              "Оценить пост"
+             :action.app/favorite-post          "Добавить пост в избранные"
+             :action.app/join-hub               "Присоединиться к хабу"
+
+             :action.app/read-user-profile      "Посмотреть профиль"
+
+             [:subscriber 1]                    "подписчик"
+             [:subscriber 2]                    "подписчика"
+             [:subscriber 5]                    "подписчиков"
+             :app/subs                          ["%d %s"
+                                                 [:count
+                                                  {:calc [:dtlrules
+                                                          {:transk :mapping :& :mapcat-values}
+                                                          [:subscriber [{:asis :subscriber}]]
+                                                          [:count
+                                                           [{:p      :count
+                                                             :custom :plurality}]]]}]]
+             :favorities/add                    "Добавить в избранное"
+             :favorities/remove                 "Удалить из избранного"
+             :subs/subscribe                    "Подписаться"
+             :subs/unsubscribe                  "Отписаться"
+
+             :action.app/write-comment          "Написать комментарий"
+             :action.app/edit-comment           "Изменить комментарий"
+             :action.app/rate-comment           "Оценить комментарий"
+
+             [:promo/embedded-message :action.app/read-post]
+                                                "Пожалуйста, авторизируйтесь или приобретите доступ, чтобы продолжить чтение публикации"
+             [:promo/embedded-message :action.app/read-post-discussion]
+                                                "Для просмотра дискуссии необходимо авторизоваться или приобрести доступ"
+             :browse-modes/all                  "Все подряд"
+             :browse-modes/feed                 "По подписке"
+             :browse-modes/best                 "Лучшие"
+             :browse-modes/search               "Поиск"
+
+             :browse-modes/profile              "Профиль"
+             :browse-modes/posts                "Публикации"
+             :browse-modes/comments             "Комментарии"
+             :browse-modes/favorities           "Избранное"
+             :browse-modes/subscribers          "Подписчики"
+             :browse-modes/ratings              "Оценки"
+
+
+             :sys/access-category               "Категория доступа"
+             :access-category/open              "Открытый"
+             :access-category/open-premium      "Премиум"
+             :access-category/restricted        "Закрытый"
+             :access-category/administrative    "Административный"
+
+             :search-widget/search-string-placeholder
+                                                "Что ищем?"
+             :search-widget/search-link-title   "Найти"
+             :search-widget/search-link-caption "Найти"
+             :sys/date                          "Дата создания"
+             :sys/author                        "Автор"
+             :sys/status                        "Статус"
+
+             :hub/name                          "Название"
+             :hub/description                   "Краткое описание"
+
+             :post/feed-hub-settings            "Присоединиться к хабам"
+             :post/feed-author-settings         "Подписаться на публикации авторов"
+
+             :post/title                        "Заголовок"
+             :post/title-default                "Новый пост"
+             :post/hub                          "Хабы"
+             :post/hub-new                      "Хабы для публикации"
+             :post/body                         "Текст"
+             :post/tag                          "Теги"
+             :post/tag-new                      "Теги (не более 10 тегов не короче трех символов каждый, ввод через запятую)"
+             :post-reader/edit-link-title       "Редактировать"
+             :post-editor/preview               "Предпросмотр"
+             :post-editor/publish               "Опубликовать"
+             :post-editor/back-to-edit          "Продолжить редактирование"
+
+             :app.post/cut-collapse             "Свернуть"
+             :app.post/cut-default-text         "Читать дальше"
+             :app.post/spoiler-default-title
+                                                "Скрытый текст"
+
+             :discussion/comment-edit-title     "Изменить"
+             :discussion/comment-body-placeholder
+                                                "Комментировать..."
+             :discussion/comment-editor-title-new
+                                                "Новый комментарий"
+             :discussion/comment-editor-title-edit
+                                                "Изменение"
+             :discussion/comment-was-changed    "Изменен"
+             :discussion/answer                 "Ответить"
+             :discussion/publish-comment-new    "Опубликовать"
+             :discussion/publish-comment-edit   "Опубликовать изменения"
+             :discussion/cancel-comment         "Отмена"
+             :discussion/sending                "Отправляем..."
+             [:comments 1]                      "комментарий"
+             [:comments 2]                      "комментария"
+             [:comments 5]                      "комментариев"
+             :discussion/show-comments          ["Показать %d %s"
+                                                 [:count
+                                                  {:calc [:dtlrules
+                                                          {:transk :mapping
+                                                           :&      :mapcat-values}
+                                                          [:comments [{:asis :comments}]]
+                                                          [:count
+                                                           [{:p      :count
+                                                             :custom :plurality}]]]}]]
+
+             :discussion/hide-comments          "Скрыть комментарии"
+
+             :comment/body                      "Текст комментария"
+
+             :user/login                        "Логин"
+             :user/login-current                "Текущий логин"
+             :user/login-new                    "Новый логин"
+             :user/pwd                          "Пароль"
+             :user/pwd-new                      "Новый пароль"
+             :user/pwd-current                  "Текущий пароль"
+             :user/nickname                     "Никнейм"
+             :user/access-level                 "Уровень доступа"
+             :user/registered                   "Зарегистрирован"
+             :user/about-title                  "Текст, который все объясняет"
+             :user/access-expiry                "Дата истечения доступа"
+             :user/access-level-upgrade         "Изменить уровень доступа"
+             :user/change-credentials           "Изменить учетные данные"
+             :user/do-change                    "Изменить"
+             :user/do-cancel                    "Отказаться"
+             :user/do-write                     "Написать"
+             :user/do-save                      "Сохранить"
+             :access-expiry/never               "Никогда"
+             :access-expiry/days-left           ["до истечения: %d %s"
+                                                 [:days-left
+                                                  {:calc [:dtlrules
+                                                          {:transk :mapping :& :mapcat-values}
+                                                          [:day [{:asis :day}]]
+                                                          [:days-left
+                                                           [{:p      :days-left
+                                                             :custom :plurality}]]]}]]
+             :access-expiry/expired             "Период действия истек, применяется гостевой уровень"
+
+             :contacts/root-menu-item           "Контакты"
+
+             :action.contacts/open-contact      "Открыть"
+             :action.contacts/add-contact       "Новый контакт"
+             :action.contacts/block-contact     "Блокировать"
+             :action.contacts/unblock-contact   "Разблокировать"
+
+             :spa-authenticator/sign-up         "Получить доступ"
+             :spa-authenticator/sign-in         "Войти"
+             :spa-authenticator/sign-out        "Выйти"
+             :spa-authenticator/reload-page     "Перезагрузить страницу"
+             :session/dropped                   "Сессия закрыта"
+
+             :sign-up-product                   "Уровень"
+             :sign-up-time-frame                "Период"
+             :sign-up-amount                    "Сумма к оплате"
+             :sign-up-base-amount               "Базовая цена"
+             :sign-up-pay-button                "Оплатить"
+             :sign-up-confirm                   "Подтвердить выбор"
+
+             :sign-up-nick-placeholder          "Никнэйм (нельзя изменить позднее)"
+             :sign-up-login-placeholder         "Логин"
+             :sign-up-pwd-placeholder           "Пароль"
+
+             :sign-in-login-placeholder         "Логин"
+             :sign-in-pwd-placeholder           "Пароль"
+             :sign-in-button                    "Войти"
+
+             :status/checking-credentials       "Проверка учетных данных..."
+
+
+             :constraint.violation.unique/non-unique-nickname
+                                                "Выбранный никнейм занят. Придумайте другой."
+             :constraint.violation.unique/non-unique-login
+                                                "Выбранный логин занят. Придумайте другой."
+             :constraint.violation.string/length
+                                                ["Требуется значение длиной от %s до %s символов" [[:string/length :min] [:string/length :max]]]
+
+             :constraint.violation.string/not-empty
+                                                ["Поле \"%s\" обязательно для заполнения" [:field]]
+             :constraint.violation.data/requirement
+                                                ["Поле \"%s\" обязательно для заполнения" [:field]]
+             :constraint.violation.seq/count    ["Необходимо указать значения в количестве от %s до %s" [[:seq/count :min] [:seq/count :max]]]
+
+             :authentication/wrong-credentials  "Учетные данные не верны"
+             :authentication/wrong-login        "Неверный логин"
+             :authentication/wrong-pwd          "Неверный пароль"
+
+             :login                             "Логин"
+             :pwd                               "Пароль"
+             :ready                             "Готово"
+             :success                           "Готово"
+             :error                             "Ошибка"
+             :nothing-found                     "По вашему запросу ничего не найдено"
+             :loading                           "Загрузка"
+             :data-pager/prev                   "< пред"
+             :data-pager/next                   "след >"
+
+             :time-frames/week                  "неделя"
+             :time-frames/month                 "месяц"
+             :time-frames/three-month           "квартал"
+             :time-frames/year                  "год"
+
+             [:for :always]                     "навсегда"
+             [:for :time-frames/week]           "за неделю"
+             [:for :time-frames/month]          "за месяц"
+             [:for :time-frames/three-month]    "за квартал"
+             [:for :time-frames/year]           "за год"
+
+             :buy-button/caption                "Купить"
+             :free/caption                      "Бесплатно"
+
+             :access-level/omega                "Гость"
+             :access-level/zeta                 "Новичок"
+             :access-level/gamma                "Аналитик"
+             :access-level/betta                "Критик"
+             :access-level/alpha                "Автор"
+
+             :rte/toolbutton-h2                 "Заголовок"
+             :rte/toolbutton-h3                 "Подзаголовок"
+             :rte/toolbutton-h4                 "Подподзаголовок"
+             :rte/toolbutton-bold               "Жирный"
+             :rte/toolbutton-italic             "Курсив"
+             :rte/toolbutton-underscore         "Подчеркнутый"
+             :rte/toolbutton-strikethrough      "Зачеркнутый"
+             :rte/toolbutton-blockquote         "Цитата"
+             :rte/toolbutton-unordered-list     "Ненумерованный список"
+             :rte/toolbutton-ordered-list       "Нумерованный список"
+             :rte/toolbutton-link               "Ссылка"
+             :rte/toolbutton-image              "Картинка"
+             :rte/toolbutton-video              "Видео"
+             :rte/toolbutton-user               "Пользователь"
+             :rte/toolbutton-spoiler            "Спойлер"
+             :rte/toolbutton-cut                "Кат"
+             :rte/toolbutton-legend             "Помощь"
+
+             :rte/dialog-result-button-cancel   "Отмена"
+             :rte/dialog-result-button-ok       "ОК"
+
+             :rte/link-tool-dialog-header       "Параметры ссылки"
+             :rte/link-tool-dialog-url-placeholder
+                                                "Введите адрес (URL) ссылки"
+             :rte/link-tool-url-required        "Необходимо ввести адрес ссылки (Пример: http://example.com)"
+             :rte/dialog-result-button-remove-link
+                                                "Убрать ссылку"
+
+             :rte/image-tool-dialog-header      "Параметры картинки"
+             :rte/image-tool-dialog-url-placeholder
+                                                "Введите адрес (URL) картинки"
+             :rte/image-tool-url-required       "Необходимо ввести адрес картинки (Пример: http://example.com/image.jpg)"
+
+             :rte/cut-tool-dialog-header        "Параметры ката"
+             :rte/cut-tool-initial-text         "Читать далее..."
+             :rte/cut-tool-dialog-text-placeholder
+                                                "Введите текст кнопки ката"
+             :rte/cut-tool-text-required        "Необходимо ввести текст кнопки ката (Пример: Читать дальше)"
+
+             :rte/video-tool-dialog-header      "Параметры видео"
+             :rte/video-tool-dialog-url-placeholder
+                                                "Введите код для встраивания видео"
+             :rte/video-tool-embedding-code-required
+                                                "Необходимо ввести код для встраивания видео (Пример: <iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/example\" frameborder=\"0\" allowfullscreen></iframe>)"
+
+             :rte/user-tool-dialog-header       "Параметры упоминания"
+             :rte/user-tool-dialog-name-placeholder
+                                                "Введите имя пользователя (Username)"
+             :rte/user-tool-name-required       "Необходимо ввести имя пользователя (Пример: Rodion-Raskolnikov)"
+
+             :date/just-now                     "Только что"
+             [:day 1]                           "день"
+             [:day 2]                           "дня"
+             [:day 5]                           "дней"
+             [:hour 1]                          "час"
+             [:hour 2]                          "часа"
+             [:hour 5]                          "часов"
+             [:minute 1]                        "минута"
+             [:minute 2]                        "минуты"
+             [:minute 5]                        "минут"
+             [:second 1]                        "секунда"
+             [:second 2]                        "секунды"
+             [:second 5]                        "секунд"
+
+             :date/since-hours                  ["%d %s назад"
+                                                 [:since-hours
+                                                  {:calc [:dtlrules
+                                                          {:transk :mapping :& :mapcat-values}
+                                                          [:hour [{:asis :hour}]]
+                                                          [:since-hours
+                                                           [{:p      :since-hours
+                                                             :custom :plurality}]]]}]]
+             :date/since-minutes                ["%d %s назад"
+                                                 [:since-minutes
+                                                  {:calc [:dtlrules
+                                                          {:transk :mapping :& :mapcat-values}
+                                                          [:minute [{:asis :minute}]]
+                                                          [:since-minutes
+                                                           [{:p      :since-minutes
+                                                             :custom :plurality}]]]}]]
+             :date/since-seconds                ["%d %s назад"
+                                                 [:since-seconds
+                                                  {:calc [:dtlrules
+                                                          {:transk :mapping :& :mapcat-values}
+                                                          [:second [{:asis :second}]]
+                                                          [:since-seconds
+                                                           [{:p      :since-seconds
+                                                             :custom :plurality}]]]}]]
+             :date/yesterday                    ["Вчера в %s:%02d" [:hour :minute]]
+             :date/today                        ["Сегодня в %s:%02d" [:hour :minute]]
+             :date/this-year                    ["%s %s в %s:%02d" [:day :month-k
+                                                                    :hour :minute]]
+             :date/generic                      ["%s %s %sг в %s:%02d" [:day :month-k
+                                                                        :year :hour :minute]]
+             :date/no-time                      ["%s %s %s" [:day :month-k :year]]
+             :jan                               "января"
+             :feb                               "февраля"
+             :mar                               "марта"
+             :apr                               "апреля"
+             :may                               "мая"
+             :jun                               "июня"
+             :jul                               "июля"
+             :aug                               "августа"
+             :sep                               "сентября"
+             :oct                               "октября"
+             :nov                               "ноября"
+             :dec                               "декабря"
+
+             :authorization/permission-denied   [:dtlrules {:close " запрещен"}
+                                                 ["Доступ к действию \"%s\"" [[:denied-msg :qn]]]
+                                                 ["в категории \"%s\"" [:access-category]]]
+             :exception                         ["Ошибка: %s" [:exception :code]]
+             :missing-server-for-request        "Не найден обработчик запроса"
+             :transport/reconnecting            "Переподключаемся..."
+
+             :order/amount                      "Сумма (базовая)"
+             :order/account                     "Счет"
+             :order/product                     "Продукт"
+             :order/paygate                     "Платежный гейт"
+             :order/paygate-order-ref           "Платежный адрес"
+             :order/paygate-amount              "Сумма в платежке"
+             :order/paygate-received-amount     "Получено"
+             :order/paygate-confirmed-amount    "Подтверждено"
+             :order/paygate-forwarded-amount    "Выведено"
+             :order/cancel                      "Отменить"
+             :balance/available                 "Общий баланс"
+             :balance/spendable                 "Подтвержденный баланс"
+             :balance/force-forwarding          "Форсировать вывод"
+             :balance/network                   "Тип сети"
+             :balance/forwarded                 "Выведено"
+             :btc-network/prod                  "Production"
+             :btc-network/test                  "Test"
+
+             }}
+

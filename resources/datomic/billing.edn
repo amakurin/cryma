@@ -1,0 +1,451 @@
+[[{:db/id                 #db/id[:db.part/db],
+   :db/ident              :db.part/billing,
+   :db.install/_partition :db.part/db}]
+
+ [{:db/id               #db/id[:db.part/billing]
+   :sys/entity          :entity.sys/entity
+   :db/ident            :entity.billing/order
+   :sys/db.part         :db.part/billing
+   :sys/access-category :access-category/administrative
+   :db/doc              "Order"
+   }
+  {:db/id               #db/id[:db.part/billing]
+   :sys/entity          :entity.sys/entity
+   :db/ident            :entity.billing/order-status
+   :sys/db.part         :db.part/billing
+   :sys/access-category :access-category/administrative
+   :db/doc              "Order status"
+   }
+  {:db/id               #db/id[:db.part/billing]
+   :sys/entity          :entity.sys/entity
+   :db/ident            :entity.billing/currency
+   :sys/db.part         :db.part/billing
+   :sys/access-category :access-category/administrative
+   :db/doc              "Currency"
+   }
+  {:db/id               #db/id[:db.part/billing]
+   :sys/entity          :entity.sys/entity
+   :db/ident            :entity.billing/product
+   :sys/db.part         :db.part/billing
+   :sys/access-category :access-category/administrative
+   :db/doc              "Product"
+   }
+  {:db/id               #db/id[:db.part/billing]
+   :sys/entity          :entity.sys/entity
+   :db/ident            :entity.billing/timeframe
+   :sys/db.part         :db.part/billing
+   :sys/access-category :access-category/administrative
+   :db/doc              "Timeframe"
+   }
+  ]
+ [
+  ;; ===========================
+  ;; Currency
+  ;; ===========================
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :currency/letter-code
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/unique             :db.unique/identity
+   :db/doc                "Currency letter code (ISO 4217 or whatever)"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :currency/digital-code
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/unique             :db.unique/identity
+   :db/doc                "Currency digital code (ISO 4217 or whatever)"
+   :db.install/_attribute :db.part/db}
+
+  ;; ===========================
+  ;; Currency Quotes
+  ;; ===========================
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :currency-quote/foreign
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/unique             :db.unique/identity
+   :db/doc                "Ref to foreign currency"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :currency-quote/base-to-foreign-quote
+   :db/valueType          :db.type/bigdec
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Base-to-foreign quote"
+   :db.install/_attribute :db.part/db}
+
+  ;; ===========================
+  ;; Time-frame
+  ;; ===========================
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :time-frame/title
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Time-frame title"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :time-frame/days
+   :db/valueType          :db.type/long
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Time-frame days"
+   :db.install/_attribute :db.part/db}
+
+  ;; ===========================
+  ;; Product
+  ;; ===========================
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :product/service-key
+   :db/valueType          :db.type/keyword
+   :db/cardinality        :db.cardinality/one
+   :db/unique             :db.unique/value
+   :db/doc                "Service identifier"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :product/pricing
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/many
+   :db/isComponent        true
+   :db/doc                "Collection of product prices"
+   :db.install/_attribute :db.part/db}
+
+  ;; ===========================
+  ;; Product price
+  ;; ===========================
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :product-price/time-frame
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Price time-frame"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :product-price/value
+   :db/valueType          :db.type/bigdec
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Price value nominated in base currency"
+   :db.install/_attribute :db.part/db}
+
+  ;; ===========================
+  ;; Paygate
+  ;; ===========================
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :paygate/currency
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Paygate currency"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :paygate/discount
+   :db/valueType          :db.type/bigdec
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Paygate discount"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :paygate/precision
+   :db/valueType          :db.type/long
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Paygate precision"
+   :db.install/_attribute :db.part/db}
+
+  ;; ===========================
+  ;; Order
+  ;; ===========================
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :order/token
+   :db/valueType          :db.type/string
+   :db/unique             :db.unique/value
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Order random token (used to prolong/cancel)"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :order/product
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Order product"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :order/product-price
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Order product-price"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :order/amount
+   :db/valueType          :db.type/bigdec
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Amount of nominated in base currency"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :order/account
+   :db/valueType          :db.type/long
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Account id (e.g. login)"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :order/remote-address
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Order remote address"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :order/paygate
+   :db/valueType          :db.type/ref
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Order's paygate"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :order/paygate-amount
+   :db/valueType          :db.type/bigdec
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Amount of order nominated in paygate currency"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :order/paygate-received-amount
+   :db/valueType          :db.type/bigdec
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Received amount nominated in paygate currency"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :order/paygate-confirmed-amount
+   :db/valueType          :db.type/bigdec
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Confirmed amount nominated in paygate currency"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :order/paygate-forwarded-amount
+   :db/valueType          :db.type/bigdec
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Forwarded amount nominated in paygate currency"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :order/paygate-order-ref
+   :db/valueType          :db.type/string
+   :db/unique             :db.unique/value
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Order reference in paygate"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :order/paygate-data
+   :db/valueType          :db.type/string
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Paygate specific data"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :order/expiry-date
+   :db/valueType          :db.type/instant
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Order expiry-date"
+   :db.install/_attribute :db.part/db}
+
+  {:db/id                 #db/id[:db.part/db]
+   :db/ident              :order/temporary-account?
+   :db/valueType          :db.type/boolean
+   :db/cardinality        :db.cardinality/one
+   :db/doc                "Account should be removed on order cancellation"
+   :db.install/_attribute :db.part/db}
+
+  ]
+
+ ;; ===========================
+ ;; Order statuses
+ ;; ===========================
+ [{:db/id      #db/id[:db.part/billing]
+   :db/ident   :order-statuses/pending
+   :sys/entity :entity.billing/order-status
+   :db/doc     "Pending"
+   }
+  {:db/id      #db/id[:db.part/billing]
+   :db/ident   :order-statuses/partially-paid
+   :sys/entity :entity.billing/order-status
+   :db/doc     "Partially paid"
+   }
+  {:db/id      #db/id[:db.part/billing]
+   :db/ident   :order-statuses/paid
+   :sys/entity :entity.billing/order-status
+   :db/doc     "Paid"
+   }
+  {:db/id      #db/id[:db.part/billing]
+   :db/ident   :order-statuses/partially-confirmed
+   :sys/entity :entity.billing/order-status
+   :db/doc     "Partially confirmed"
+   }
+  {:db/id      #db/id[:db.part/billing]
+   :db/ident   :order-statuses/confirmed
+   :sys/entity :entity.billing/order-status
+   :db/doc     "Confirmed"
+   }
+  {:db/id      #db/id[:db.part/billing]
+   :db/ident   :order-statuses/forwarded
+   :sys/entity :entity.billing/order-status
+   :db/doc     "Forwarded"
+   }
+  {:db/id      #db/id[:db.part/billing]
+   :db/ident   :order-statuses/cancelled
+   :sys/entity :entity.billing/order-status
+   :db/doc     "Cancelled"
+   }
+  ]
+
+ ;; ===========================
+ ;; Currencies
+ ;; ===========================
+ [{:db/id                 #db/id[:db.part/billing]
+   :db/ident              :currency/USD
+   :sys/entity            :entity.billing/currency
+   :currency/letter-code  "USD"
+   :currency/digital-code "840"
+   :db/doc                "United States Dollar"
+   }
+  {:db/id                #db/id[:db.part/billing]
+   :db/ident             :currency/bitcoin
+   :sys/entity           :entity.billing/currency
+   :currency/letter-code "BTC"
+   :db/doc               "Bitcoin crypto currency"
+   }]
+
+ ;; ===========================
+ ;; Default quotes
+ ;; ===========================
+ [{:db/id                                #db/id[:db.part/billing]
+   :currency-quote/foreign               :currency/bitcoin
+   :currency-quote/base-to-foreign-quote 0.0015625M
+   }]
+
+ ;; ===========================
+ ;; Time-frames
+ ;; ===========================
+ [{:db/id           #db/id[:db.part/billing]
+   :db/ident        :time-frames/week
+   :sys/entity      :entity.billing/timeframe
+   :time-frame/days 7
+   }
+  {:db/id           #db/id[:db.part/billing]
+   :db/ident        :time-frames/month
+   :sys/entity      :entity.billing/timeframe
+   :time-frame/days 31
+   }
+  {:db/id           #db/id[:db.part/billing]
+   :db/ident        :time-frames/three-month
+   :sys/entity      :entity.billing/timeframe
+   :time-frame/days 93
+   }
+  {:db/id           #db/id[:db.part/billing]
+   :db/ident        :time-frames/year
+   :sys/entity      :entity.billing/timeframe
+   :time-frame/days 365
+   }]
+
+ ;; ===========================
+ ;; Paygates
+ ;; ===========================
+ [{:db/id             #db/id[:db.part/billing]
+   :db/ident          :paygates/btc-gate
+   :paygate/currency  :currency/bitcoin
+   :paygate/precision 9
+   :db/doc            "Bitcoin gate payment processing"
+   }
+  {:db/id             #db/id[:db.part/billing]
+   :db/ident          :paygates/manual
+   :paygate/currency  :currency/USD
+   :paygate/precision 3
+   :db/doc            "Manual payment processing"
+   }]
+
+ ;; ===========================
+ ;; Products
+ ;; ===========================
+ [{:db/id               #db/id[:db.part/billing]
+   :sys/entity          :entity.billing/product
+   :product/service-key :access-level/zeta
+   :product/pricing     [{:db/id                    #db/id[:db.part/billing]
+                          :product-price/time-frame :time-frames/week
+                          :product-price/value      1M}
+                         {:db/id                    #db/id[:db.part/billing]
+                          :product-price/time-frame :time-frames/month
+                          :product-price/value      3M}
+                         {:db/id                    #db/id[:db.part/billing]
+                          :product-price/time-frame :time-frames/three-month
+                          :product-price/value      8M}
+                         {:db/id                    #db/id[:db.part/billing]
+                          :product-price/time-frame :time-frames/year
+                          :product-price/value      30M}]
+   :db/doc              "Новичок"
+   }
+  {:db/id               #db/id[:db.part/billing]
+   :sys/entity          :entity.billing/product
+   :product/service-key :access-level/gamma
+   :product/pricing     [{:db/id                    #db/id[:db.part/billing]
+                          :product-price/time-frame :time-frames/week
+                          :product-price/value      2M}
+                         {:db/id                    #db/id[:db.part/billing]
+                          :product-price/time-frame :time-frames/month
+                          :product-price/value      6M}
+                         {:db/id                    #db/id[:db.part/billing]
+                          :product-price/time-frame :time-frames/three-month
+                          :product-price/value      15M}
+                         {:db/id                    #db/id[:db.part/billing]
+                          :product-price/time-frame :time-frames/year
+                          :product-price/value      60M}]
+   :db/doc              "Аналитик"
+   }
+  {:db/id               #db/id[:db.part/billing]
+   :sys/entity          :entity.billing/product
+   :product/service-key :access-level/betta
+   :product/pricing     [{:db/id                    #db/id[:db.part/billing]
+                          :product-price/time-frame :time-frames/week
+                          :product-price/value      3M}
+                         {:db/id                    #db/id[:db.part/billing]
+                          :product-price/time-frame :time-frames/month
+                          :product-price/value      9M}
+                         {:db/id                    #db/id[:db.part/billing]
+                          :product-price/time-frame :time-frames/three-month
+                          :product-price/value      25M}
+                         {:db/id                    #db/id[:db.part/billing]
+                          :product-price/time-frame :time-frames/year
+                          :product-price/value      90M}]
+   :db/doc              "Критик"
+   }
+  {:db/id               #db/id[:db.part/billing]
+   :sys/entity          :entity.billing/product
+   :product/service-key :access-level/alpha
+   :product/pricing     [{:db/id                    #db/id[:db.part/billing]
+                          :product-price/time-frame :time-frames/week
+                          :product-price/value      5M}
+                         {:db/id                    #db/id[:db.part/billing]
+                          :product-price/time-frame :time-frames/month
+                          :product-price/value      15M}
+                         {:db/id                    #db/id[:db.part/billing]
+                          :product-price/time-frame :time-frames/three-month
+                          :product-price/value      40M}
+                         {:db/id                    #db/id[:db.part/billing]
+                          :product-price/time-frame :time-frames/year
+                          :product-price/value      150M}]
+   :db/doc              "Автор"
+   }
+  ]]
+
+

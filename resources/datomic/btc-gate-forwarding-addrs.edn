@@ -1,0 +1,44 @@
+[[
+  ;=================TEST
+  {:db/id #db/id[:db.part/btc-gate]
+   :forwarding/network :btc-network/test
+   :forwarding/address "2NDW7tg7nNtR6sd3dQLgSFHA7wzohfakHuX"}
+
+  {:db/id #db/id[:db.part/btc-gate]
+   :forwarding/network :btc-network/test
+   :forwarding/address "2NCsZXDCPb71uo58FJPDXvJXyWzmjtx73zN"}
+
+  {:db/id #db/id[:db.part/btc-gate]
+   :forwarding/network :btc-network/test
+   :forwarding/address "2N74Dd3ZiCcbAmsD1eJCFj9oVtkXipMoaz2"}
+
+  {:db/id #db/id[:db.part/btc-gate]
+   :forwarding/network :btc-network/test
+   :forwarding/address "2MvNb6jQTrwMip8FjfUW4BKq8WCY4AHkuSK"}
+
+  ;=================PROD
+  {:db/id #db/id[:db.part/btc-gate]
+   :forwarding/network :btc-network/prod
+   :forwarding/address "1JdptZTw6T5fz5qBR3Rh4qD6FbXqPHg9Us"}
+
+  {:db/id #db/id[:db.part/btc-gate]
+   :forwarding/network :btc-network/prod
+   :forwarding/address "12eB9v9Jgjiw4FQCxpSjd9LATN1YZCbwj4"}
+
+  {:db/id #db/id[:db.part/btc-gate]
+   :forwarding/network :btc-network/prod
+   :forwarding/address "14Y9ohpapwctkFHev4FyVzgdGjU2QzqZdU"}
+
+  {:db/id #db/id[:db.part/btc-gate]
+   :forwarding/network :btc-network/prod
+   :forwarding/address "1KnLC77AMcXJqyDWf9yVBz3GWNFMVXGHq3"}
+
+  {:db/id #db/id[:db.part/btc-gate]
+   :forwarding/network :btc-network/prod
+   :forwarding/address "1EykJDCdqMJ3rnb11sD97LWaoeZPikorCV"}
+  ]]
+
+
+
+
+
